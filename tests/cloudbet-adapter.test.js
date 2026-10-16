@@ -1,0 +1,16 @@
+const assert=require('node:assert/strict');
+const {matchingCompetition,matchingEvent,extract1x2}=require('../netlify/lib/cloudbet-compare');
+const now=new Date(Date.now()+86400000).toISOString();const liveTime=new Date(Date.now()-20*60000).toISOString();
+const c={categories:[{name:'England',competitions:[{name:'Premier League',key:'soccer-england-premier-league'}]}]};
+assert.equal(matchingCompetition(c,'England. Premier League').key,'soccer-england-premier-league');
+assert.equal(matchingCompetition(c,'Spain. Premier League'),null);
+const e={id:123,status:'TRADING',home:{name:'Arsenal'},away:{name:'Leeds United'},startTime:now,markets:{'soccer.match_odds':{submarkets:{'period=ft':{selections:['home','draw','away'].map((outcome,i)=>({outcome,params:'',price:[1.4,4.2,8.4][i],status:'SELECTION_ENABLED',side:'BACK'}))}}}}};
+assert.equal(matchingEvent({events:[e]},{home:'Arsenal',away:'Leeds United',start:now}),e);
+assert.equal(matchingEvent({events:[{...e,status:'TRADING_LIVE',startTime:liveTime}]},{home:'Arsenal',away:'Leeds United',start:liveTime,kind:'live'}).status,'TRADING_LIVE');
+assert.equal(matchingEvent({events:[e]},{home:'Arsenal',away:'Leeds United',start:now,kind:'live'}),null);
+assert.equal(matchingEvent({events:[{...e,status:'SUSPENDED',startTime:liveTime}]},{home:'Arsenal',away:'Leeds United',start:liveTime,kind:'live'}),null);
+assert.equal(matchingEvent({events:[e]},{home:'Leeds United',away:'Arsenal',start:now}),null);
+assert.equal(extract1x2(e).draw,4.2);
+assert.equal(extract1x2({...e,markets:{'soccer.match_odds':{submarkets:{'period=1h':e.markets['soccer.match_odds'].submarkets['period=ft']}}}}),null);
+assert.equal(extract1x2({...e,markets:{'soccer.match_odds':{submarkets:{'period=ft':{selections:[{outcome:'home',price:1.4,side:'BACK',status:'SELECTION_ENABLED'}]}}}}}),null);
+console.log('6 Cloudbet match/odds guards PASS');

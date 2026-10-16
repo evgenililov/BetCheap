@@ -1,0 +1,22 @@
+'use strict';
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const {handler}=require('../netlify/functions/cloudbet');
+const {extract1x2}=require('../netlify/lib/cloudbet-compare');
+process.env.CLOUDBET_API_KEY='test-only-no-real-token';
+const start=new Date(Date.now()+6*3600_000).toISOString();
+const liveStart=new Date(Date.now()-10*60000).toISOString();
+const ev=(id,markets={})=>({id,status:'TRADING',startTime:start,home:{name:'Arsenal'},away:{name:'Leeds United'},markets});
+const markets={'soccer.match_odds':{submarkets:{'period=ft':{selections:['home','draw','away'].map((outcome,i)=>({outcome,price:[1.63,4.11,6.2][i],side:'BACK',status:'SELECTION_ENABLED',params:''}))}}}};
+const savedFetch=global.fetch;
+function wire(mode){const hits=[];global.fetch=async(url,opts)=>{hits.push(url);const path=new URL(url).pathname;
+ if(path.endsWith('/sports/soccer'))return {ok:true,json:async()=>({categories:[{name:'England',competitions:[{name:'Premier League',key:'soccer-england-premier-league'}]}]})};
+ if(path.endsWith('/competitions/soccer-england-premier-league'))return {ok:true,json:async()=>({events:mode==='fallback'?[{...ev(901),status:'TRADING_LIVE',startTime:liveStart}]:[ev(901),ev(902),ev(903)]})};
+ if(path.endsWith('/events/901'))return {ok:true,json:async()=>({...ev(901,mode==='fallback'&&new URL(url).searchParams.has('markets')?markets:{}),...(mode==='fallback'?{status:'TRADING_LIVE',startTime:liveStart}:{})})};
+ if(path.endsWith('/events/902'))return {ok:true,json:async()=>ev(902,markets)};
+ if(path.endsWith('/events/903'))return {ok:true,json:async()=>ev(903,{})};
+ throw Error('Unexpected URL: '+url);
+};return hits;}
+test('diagnostic checks more than one live provider fixture, no tokens returned',async()=>{const hits=wire('probe');let r=await handler({httpMethod:'GET',queryStringParameters:{op:'probe'}}),j=JSON.parse(r.body);assert.equal(j.ok,true);assert.equal(j.individualEvent1x2Available,true);assert.equal(j.diagnostics.checked,3);assert.equal(j.diagnostics.complete1x2,1);assert.equal(j.diagnostics.missingMarkets,2);assert.equal(hits.filter(x=>x.includes('/events/')).length,3);assert(!r.body.includes('test-only-no-real-token'));});
+test('event comparison retries exact same ID with official market parameter',async()=>{const hits=wire('fallback');let r=await handler({httpMethod:'GET',queryStringParameters:{op:'compare',kind:'live',sportId:'1',home:'Arsenal',away:'Leeds United',league:'England. Premier League',start:liveStart}});const j=JSON.parse(r.body);assert.equal(j.matched,true);assert.equal(j.odds.home,1.63);assert(hits.some(x=>x.includes('/events/901?markets=soccer.matchOdds')));assert(hits.every(x=>!x.includes('/events/902')));});
+test('no invented odds or second market when suspended',()=>{assert.equal(extract1x2(ev(9,{})),null);const copy=JSON.parse(JSON.stringify(markets));copy['soccer.match_odds'].submarkets['period=ft'].selections[1].status='SUSPENDED';assert.equal(extract1x2(ev(9,copy)),null)});

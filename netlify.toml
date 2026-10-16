@@ -1,0 +1,21 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Serve one canonical UI so the compare route cannot drift from snap.js.
+[[redirects]]
+  from = "/compare"
+  to = "/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/compare.html"
+  to = "/index.html"
+  status = 200
+  force = true

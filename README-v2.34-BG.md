@@ -1,0 +1,1 @@
+BetCheap v2.34 Cloudbet safe preview. Strict exact competition+team+time pre-match football 1X2 only. Cloudbet API key server-only. Missing odds stay hidden. Live cross-provider comparisons not activated due to feed delay. No affiliate outbound link. Requires real production confirmation and GEO legal review.
