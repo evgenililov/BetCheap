@@ -1,5 +1,5 @@
 "use strict";
-const {competitionMatch,matchingCompetition,matchingEvent,matchingDiagnostic,eventClock,sameEvent,extract1x2}=require('../lib/cloudbet-compare');
+const {providerQuery,competitionMatch,matchingCompetition,matchingEvent,matchingDiagnostic,eventClock,sameEvent,extract1x2}=require('../lib/cloudbet-compare');
 const {competitionCoverage}=require('../lib/competition-coverage');
 const URL_BASE='https://sports-api.cloudbet.com/pub/v2/odds';
 const answer=(statusCode,payload)=>({statusCode,headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer'},body:JSON.stringify(payload)});
@@ -73,7 +73,7 @@ exports.handler=async event=>{
  let stage='catalog';try{
   const data=await catalog(key),match=competitionMatch(data,league),comp=match.competition;if(!comp)return answer(200,{ok:true,matched:false,reason:'competition_not_verified',provider:'Cloudbet',diagnostic:{competitionFailure:match.reason,candidates:match.candidates}});
   stage='competition';const fixture=await competition(key,comp.key,q.kind);
-  const query={home,away,start,kind:q.kind},matched=matchingEvent(fixture,query);
+  const query=providerQuery({home,away,start,kind:q.kind},league),matched=matchingEvent(fixture,query);
   if(!matched)return answer(200,{ok:true,matched:false,reason:'event_not_verified',provider:'Cloudbet',diagnostic:matchingDiagnostic(fixture,query)});
   let odds=null,source='event-detail';let verified=matched;
   // Always fetch the selected event's available markets, never all markets for an entire competition.

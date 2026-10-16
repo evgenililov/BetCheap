@@ -5,6 +5,23 @@ const CLUB_WORDS=new Set(['fc','afc','sc','cf','sv','vfb','fk','fkf','football',
 const coreName=v=>normalize(v).split(' ').filter(x=>!CLUB_WORDS.has(x)).join(' ');
 function sameTeam(a,b){const n1=normalize(a),n2=normalize(b);if(!n1||!n2)return false;return n1===n2||(coreName(a).length>=4&&coreName(a)===coreName(b));}
 function leagueParts(s){const parts=String(s||'').split(/\s*[.]\s*/).filter(Boolean);return parts.length>=2?{country:normalize(parts[0]),league:normalize(parts.slice(1).join(' '))}:null;}
+function competitionName(country,name){
+ const value=normalize(name);
+ // Confirmed against the same Braga–Gil Vicente fixture in both feeds on 2026-10-16.
+ return country==='portugal'&&['primeira liga','liga portugal'].includes(value)?'liga portugal':value;
+}
+const providerTeamNames=new Map([
+ ['spain|la liga',new Map([['deportivo de a coruna','RC Deportivo La Coruna']])],
+ ['netherlands|eredivisie',new Map([['excelsior','Excelsior Rotterdam']])],
+ ['germany|bundesliga',new Map([['1 koln','FC Koln']])]
+]);
+function providerQuery(query,league){
+ const parts=leagueParts(league);
+ const aliases=parts&&providerTeamNames.get(parts.country+'|'+parts.league);
+ if(!aliases)return {...query};
+ // Exact observed source names only, scoped to their competition. Qualifiers stay intact.
+ return {...query,home:aliases.get(normalize(query.home))||query.home,away:aliases.get(normalize(query.away))||query.away};
+}
 function competitionMatch(data,league){
  const fullName=normalize(league),expected=leagueParts(league);
  if(!fullName)return {competition:null,reason:'invalid_competition_name',candidates:0};
@@ -13,7 +30,7 @@ function competitionMatch(data,league){
   if(expected&&normalize(category.name)!==expected.country)continue;
   countries++;
   for(const c of category.competitions||[]){
-   if(normalize(c.name)!==(expected?expected.league:fullName)||typeof c.key!=='string'||!/^[a-z0-9-]+$/.test(c.key))continue;
+   if((expected?competitionName(expected.country,c.name):normalize(c.name))!==(expected?competitionName(expected.country,expected.league):fullName)||typeof c.key!=='string'||!/^[a-z0-9-]+$/.test(c.key))continue;
    found.push(c);
   }
  }
@@ -97,4 +114,4 @@ function extract1x2(e){
  // Both documented aliases may be present; accept identical prices only.
  return found.length&&found.every(o=>['home','draw','away'].every(k=>o[k]===found[0][k]))?found[0]:null;
 }
-module.exports={normalize,coreName,sameTeam,leagueParts,competitionMatch,matchingCompetition,eventKindOK,eventClock,eventTimeOK,sameEvent,matchingEvent,matchingDiagnostic,extract1x2};
+module.exports={normalize,coreName,sameTeam,leagueParts,providerQuery,competitionMatch,matchingCompetition,eventKindOK,eventClock,eventTimeOK,sameEvent,matchingEvent,matchingDiagnostic,extract1x2};
