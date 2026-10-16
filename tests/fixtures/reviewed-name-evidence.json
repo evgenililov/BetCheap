@@ -1,0 +1,245 @@
+[
+  {
+    "league": "Italy. Serie A",
+    "home": "Udinese Calcio",
+    "away": "Lecce",
+    "providerHome": "Udinese Calcio",
+    "providerAway": "US Lecce",
+    "start": "2026-10-18T10:30:00Z",
+    "checkedAt": "2026-10-16T11:11:33.733Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Fiorentina",
+    "away": "Como",
+    "providerHome": "ACF Fiorentina",
+    "providerAway": "Como 1907",
+    "start": "2026-10-18T13:00:00Z",
+    "checkedAt": "2026-10-16T11:11:33.944Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Milan",
+    "away": "Atalanta",
+    "providerHome": "AC Milan",
+    "providerAway": "Atalanta BC",
+    "start": "2026-10-18T16:00:00Z",
+    "checkedAt": "2026-10-16T11:11:33.952Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Juventus",
+    "away": "Lazio",
+    "providerHome": "Juventus",
+    "providerAway": "SS Lazio",
+    "start": "2026-10-18T18:45:00Z",
+    "checkedAt": "2026-10-16T11:11:34.199Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Unione Venezia",
+    "away": "Napoli",
+    "providerHome": "Venezia FC",
+    "providerAway": "SSC Napoli",
+    "start": "2026-10-17T13:00:00Z",
+    "checkedAt": "2026-10-16T11:11:33.592Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Bologna 1909",
+    "away": "Internazionale Milano",
+    "providerHome": "Bologna FC",
+    "providerAway": "Inter Milan",
+    "start": "2026-10-17T16:00:00Z",
+    "checkedAt": "2026-10-16T11:11:57.079Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Roma",
+    "away": "Genoa",
+    "providerHome": "AS Roma",
+    "providerAway": "Genoa CFC",
+    "start": "2026-10-17T18:45:00Z",
+    "checkedAt": "2026-10-16T11:11:33.342Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Monza 1912",
+    "away": "Cagliari Calcio",
+    "providerHome": "AC Monza",
+    "providerAway": "Cagliari Calcio",
+    "start": "2026-10-19T16:30:00Z",
+    "checkedAt": "2026-10-16T11:11:34.491Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Parma",
+    "away": "Torino",
+    "providerHome": "Parma Calcio",
+    "providerAway": "Torino FC",
+    "start": "2026-10-19T18:45:00Z",
+    "checkedAt": "2026-10-16T11:11:34.554Z"
+  },
+  {
+    "league": "Italy. Serie B",
+    "home": "Pisa",
+    "away": "Cremonese",
+    "providerHome": "Pisa SC",
+    "providerAway": "US Cremonese",
+    "start": "2026-10-17T17:30:00Z",
+    "checkedAt": "2026-10-16T11:11:37.267Z"
+  },
+  {
+    "league": "Italy. Serie B",
+    "home": "Mantova",
+    "away": "Citta di Palermo",
+    "providerHome": "Mantova 1911",
+    "providerAway": "Palermo FC",
+    "start": "2026-10-17T15:15:00Z",
+    "checkedAt": "2026-10-16T11:11:36.856Z"
+  },
+  {
+    "league": "Italy. Serie B",
+    "home": "Juve Stabia",
+    "away": "Sudtirol",
+    "providerHome": "Juve Stabia",
+    "providerAway": "FC Sudtirol Bolzano",
+    "start": "2026-10-18T13:00:00Z",
+    "checkedAt": "2026-10-16T11:11:37.230Z"
+  },
+  {
+    "league": "Italy. Serie B",
+    "home": "Cesena",
+    "away": "Avellino 1912",
+    "providerHome": "Cesena FC",
+    "providerAway": "US Avellino",
+    "start": "2026-10-18T15:15:00Z",
+    "checkedAt": "2026-10-16T11:11:57.457Z"
+  },
+  {
+    "league": "Italy. Serie B",
+    "home": "Hellas Verona",
+    "away": "Catanzaro 1929",
+    "providerHome": "Hellas Verona",
+    "providerAway": "US Catanzaro",
+    "start": "2026-10-16T18:30:00Z",
+    "checkedAt": "2026-10-16T11:11:36.558Z"
+  },
+  {
+    "league": "Italy. Serie B",
+    "home": "Sampdoria",
+    "away": "A.S.D. Atletico Arezzo",
+    "providerHome": "Sampdoria Genoa",
+    "providerAway": "SS Arezzo",
+    "start": "2026-10-18T17:30:00Z",
+    "checkedAt": "2026-10-16T11:11:57.624Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Como",
+    "away": "Sassuolo Calcio",
+    "providerHome": "Como 1907",
+    "providerAway": "Sassuolo Calcio",
+    "start": "2026-10-24T13:00:00Z",
+    "checkedAt": "2026-10-16T11:11:34.895Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Atalanta",
+    "away": "Frosinone Calcio",
+    "providerHome": "Atalanta BC",
+    "providerAway": "Frosinone Calcio",
+    "start": "2026-10-25T14:00:00Z",
+    "checkedAt": "2026-10-16T11:11:35.801Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Napoli",
+    "away": "Roma",
+    "providerHome": "SSC Napoli",
+    "providerAway": "AS Roma",
+    "start": "2026-10-24T16:00:00Z",
+    "checkedAt": "2026-10-16T11:11:35.232Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Lazio",
+    "away": "Parma",
+    "providerHome": "SS Lazio",
+    "providerAway": "Parma Calcio",
+    "start": "2026-10-24T18:45:00Z",
+    "checkedAt": "2026-10-16T11:11:35.639Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Genoa",
+    "away": "Unione Venezia",
+    "providerHome": "Genoa CFC",
+    "providerAway": "Venezia FC",
+    "start": "2026-10-25T14:00:00Z",
+    "checkedAt": "2026-10-16T11:11:35.593Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Cagliari Calcio",
+    "away": "Bologna 1909",
+    "providerHome": "Cagliari Calcio",
+    "providerAway": "Bologna FC",
+    "start": "2026-10-24T13:00:00Z",
+    "checkedAt": "2026-10-16T11:11:35.053Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Internazionale Milano",
+    "away": "Fiorentina",
+    "providerHome": "Inter Milan",
+    "providerAway": "ACF Fiorentina",
+    "start": "2026-10-25T11:30:00Z",
+    "checkedAt": "2026-10-16T11:11:57.051Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Torino",
+    "away": "Monza 1912",
+    "providerHome": "Torino FC",
+    "providerAway": "AC Monza",
+    "start": "2026-10-23T18:45:00Z",
+    "checkedAt": "2026-10-16T11:11:34.731Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Lecce",
+    "away": "Juventus",
+    "providerHome": "US Lecce",
+    "providerAway": "Juventus",
+    "start": "2026-10-25T17:00:00Z",
+    "checkedAt": "2026-10-16T11:11:36.634Z"
+  },
+  {
+    "league": "Italy. Serie A",
+    "home": "Udinese Calcio",
+    "away": "Milan",
+    "providerHome": "Udinese Calcio",
+    "providerAway": "AC Milan",
+    "start": "2026-10-25T19:45:00Z",
+    "checkedAt": "2026-10-16T11:11:36.026Z"
+  },
+  {
+    "league": "Hong Kong. Premier League",
+    "home": "Eastern District",
+    "away": "Eastern Sports Club",
+    "providerHome": "Eastern District",
+    "providerAway": "Eastern SC",
+    "start": "2026-10-17T08:00:00Z",
+    "checkedAt": "2026-10-16T11:11:37.775Z"
+  },
+  {
+    "league": "Italy. Serie B",
+    "home": "Benevento Calcio",
+    "away": "Vicenza Calcio",
+    "providerHome": "Benevento Calcio",
+    "providerAway": "L.R. Vicenza",
+    "start": "2026-10-17T13:00:00Z",
+    "checkedAt": "2026-10-16T11:13:48.638Z"
+  }
+]

@@ -45,6 +45,7 @@ test('coverage reports both modes through the function without per-event provide
   const {handler}=require('../netlify/functions/cloudbet');
   let response=await handler({httpMethod:'GET',queryStringParameters:{op:'coverage'}}),data=JSON.parse(response.body);
   assert.equal(response.statusCode,200);assert.equal(data.ok,true);assert.equal(data.catalogComplete,true);assert.equal(data.marketsChecked,false);
+  assert.ok(data.cloudbetCatalog.some(r=>r.country==='Spain'&&r.name==='La Liga'));
   assert.equal(data.results.length,2);assert.deepEqual(modes,['prematch','live']);assert.equal(catalogRequests,1);
   assert.ok(data.results.every(r=>r.counts.matched===1));assert.ok(!response.body.includes('test-only-coverage-key'));
   onexbet.handler=async()=>({statusCode:503,body:'do-not-expose-provider-error'});

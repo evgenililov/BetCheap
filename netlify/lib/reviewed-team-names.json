@@ -1,0 +1,35 @@
+{
+  "italy|serie a": {
+    "lecce": "US Lecce",
+    "fiorentina": "ACF Fiorentina",
+    "como": "Como 1907",
+    "milan": "AC Milan",
+    "atalanta": "Atalanta BC",
+    "lazio": "SS Lazio",
+    "unione venezia": "Venezia FC",
+    "napoli": "SSC Napoli",
+    "bologna 1909": "Bologna FC",
+    "internazionale milano": "Inter Milan",
+    "roma": "AS Roma",
+    "genoa": "Genoa CFC",
+    "monza 1912": "AC Monza",
+    "parma": "Parma Calcio",
+    "torino": "Torino FC"
+  },
+  "italy|serie b": {
+    "pisa": "Pisa SC",
+    "cremonese": "US Cremonese",
+    "mantova": "Mantova 1911",
+    "citta di palermo": "Palermo FC",
+    "sudtirol": "FC Sudtirol Bolzano",
+    "cesena": "Cesena FC",
+    "avellino 1912": "US Avellino",
+    "catanzaro 1929": "US Catanzaro",
+    "sampdoria": "Sampdoria Genoa",
+    "a s d atletico arezzo": "SS Arezzo",
+    "vicenza calcio": "L.R. Vicenza"
+  },
+  "hong kong|premier league": {
+    "eastern sports club": "Eastern SC"
+  }
+}

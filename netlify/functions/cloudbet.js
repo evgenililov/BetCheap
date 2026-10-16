@@ -1,6 +1,7 @@
 "use strict";
 const {providerQuery,competitionMatch,matchingCompetition,matchingEvent,matchingDiagnostic,eventClock,sameEvent,extract1x2}=require('../lib/cloudbet-compare');
 const {competitionCoverage}=require('../lib/competition-coverage');
+const {catalogRows,fixturePage}=require('../lib/cloudbet-audit');
 const URL_BASE='https://sports-api.cloudbet.com/pub/v2/odds';
 const answer=(statusCode,payload)=>({statusCode,headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer'},body:JSON.stringify(payload)});
 const clean=(v,max)=>typeof v==='string'&&v.length<=max?v.trim():'';
@@ -20,6 +21,17 @@ exports.handler=async event=>{
  const key=process.env.CLOUDBET_API_KEY;const op=event.queryStringParameters?.op||'status';
  if(op==='status')return answer(200,{ok:true,configured:!!key,provider:'Cloudbet Affiliate Feed API',verifiedLive:false,feedLagNotice:'Affiliate odds may be delayed up to 60 seconds.'});
  if(!key)return answer(503,{ok:false,error:'cloudbet_not_configured'});
+ if(op==='fixtures'){
+  const q=event.queryStringParameters||{},offsetText=q.offset||'0';
+  if(typeof q.competitionKey!=='string'||!/^[-a-z0-9]{1,160}$/.test(q.competitionKey)||!/^\d{1,7}$/.test(offsetText))return answer(400,{ok:false,error:'invalid_audit_query'});
+  let stage='catalog';
+  try{
+   const data=await catalog(key),rows=catalogRows(data),found=rows.filter(r=>r.key===q.competitionKey);
+   if(found.length!==1)return answer(400,{ok:false,error:'competition_not_verified'});
+   stage='competition';const fixtures=await competition(key,q.competitionKey,'prematch');
+   return answer(200,{ok:true,scope:'fixture_names_only',marketsChecked:false,competition:found[0],generatedAt:new Date().toISOString(),...fixturePage(fixtures,Number(offsetText))});
+  }catch(e){return answer(502,{ok:false,stage,...getError(e)});}
+ }
  if(op==='coverage'){
   const kind=event.queryStringParameters?.kind||'all';
   if(!['all','prematch','live'].includes(kind))return answer(400,{ok:false,error:'invalid_kind'});
@@ -34,7 +46,7 @@ exports.handler=async event=>{
     return {ok:true,...competitionCoverage(data,JSON.parse(response.body),mode)};
    }));
    const complete=results.every(r=>r.ok&&!r.possiblyTruncated);
-   return answer(200,{ok:results.every(r=>r.ok),catalogComplete:complete,scope:'football_competition_catalogs',marketsChecked:false,generatedAt:new Date().toISOString(),results});
+   return answer(200,{ok:results.every(r=>r.ok),catalogComplete:complete,scope:'football_competition_catalogs',marketsChecked:false,cloudbetCatalog:catalogRows(data),generatedAt:new Date().toISOString(),results});
   }catch(e){return answer(502,{ok:false,stage,...(stage==='catalog'?getError(e):{error:'onexbet_catalog_invalid'})});}
  }
  if(op==='probe'){

@@ -13,6 +13,7 @@ function competitionName(country,name){
  return value;
 }
 const providerTeamNames=new Map([
+ ...Object.entries(require('./reviewed-team-names.json')).map(([scope,names])=>[scope,new Map(Object.entries(names))]),
  ['spain|la liga',new Map([['deportivo de a coruna','RC Deportivo La Coruna']])],
  ['netherlands|eredivisie',new Map([['excelsior','Excelsior Rotterdam']])],
  ['germany|bundesliga',new Map([['1 koln','FC Koln']])],
