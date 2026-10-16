@@ -1,5 +1,5 @@
 "use strict";
-const {matchingCompetition,matchingEvent,matchingDiagnostic,sameEvent,extract1x2}=require('../lib/cloudbet-compare');
+const {matchingCompetition,matchingEvent,matchingDiagnostic,eventClock,sameEvent,extract1x2}=require('../lib/cloudbet-compare');
 const URL_BASE='https://sports-api.cloudbet.com/pub/v2/odds';
 const answer=(statusCode,payload)=>({statusCode,headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer'},body:JSON.stringify(payload)});
 const clean=(v,max)=>typeof v==='string'&&v.length<=max?v.trim():'';
@@ -71,6 +71,6 @@ exports.handler=async event=>{
     odds=extract1x2(second);if(odds)verified=second;}
   }
   if(!odds)return answer(200,{ok:true,matched:false,reason:'full_time_1x2_unavailable',provider:'Cloudbet',diagnostic:{marketKeyCount:Object.keys(verified.markets||{}).length,hasPrimaryKey:Boolean(verified.markets?.['soccer.match_odds']||verified.markets?.['soccer.matchOdds']),via:source}});
-  const seenAt=new Date().toISOString();return answer(200,{ok:true,matched:true,kind:q.kind,provider:'Cloudbet',source:'Cloudbet Affiliate Feed API',retrieval:source,competition:comp.name,home:verified.home.name,away:verified.away.name,start:verified.startTime,cloudbetEventId:String(verified.id),odds,checkedAt:seenAt,feedNotice:'Cloudbet affiliate odds may be up to 60s delayed; timestamps are fetch times, not synchronized market times. Markets may suspend. No automatic bet placement or unverified referral routing.'});
+  const seenAt=new Date().toISOString();return answer(200,{ok:true,matched:true,kind:q.kind,provider:'Cloudbet',source:'Cloudbet Affiliate Feed API',retrieval:source,competition:comp.name,home:verified.home.name,away:verified.away.name,start:eventClock(verified).value,timeSource:eventClock(verified).source,cloudbetEventId:String(verified.id),odds,checkedAt:seenAt,feedNotice:'Cloudbet affiliate odds may be up to 60s delayed; timestamps are fetch times, not synchronized market times. Markets may suspend. No automatic bet placement or unverified referral routing.'});
  }catch(e){return answer(502,{ok:false,stage,...getError(e)});}
 };

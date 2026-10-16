@@ -7,8 +7,21 @@ function sameTeam(a,b){const n1=normalize(a),n2=normalize(b);if(!n1||!n2)return 
 function leagueParts(s){const parts=String(s||'').split(/\s*[.]\s*/).filter(Boolean);return parts.length>=2?{country:normalize(parts[0]),league:normalize(parts.slice(1).join(' '))}:null;}
 function matchingCompetition(data,league){const expected=leagueParts(league);if(!expected)return null;const found=[];for(const category of data?.categories||[]){if(normalize(category.name)!==expected.country)continue;for(const c of category.competitions||[]){if(normalize(c.name)===expected.league&&typeof c.key==='string'&&/^[a-z0-9-]+$/.test(c.key))found.push(c);}}return found.length===1?found[0]:null;}
 function eventKindOK(e,kind){return e?.status===(kind==='live'?'TRADING_LIVE':'TRADING')}
+// Current Cloudbet Feed protobuf exposes cutoff_time, encoded as cutoffTime by protojson.
+// https://github.com/cloudbet/docs/blob/c3024e079db1d64684f742fbf7e26663aa3d8d36/cloudbet/feed.proto
+// Older response examples also contain startTime. Keep its compatibility, without
+// accepting conflicting timestamps or treating the provider cutoff as an unchecked kickoff.
+function eventClock(e){
+ const times=['startTime','cutoffTime'].flatMap(source=>{
+  const value=e?.[source];
+  if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value))return [];
+  const ms=Date.parse(value);return Number.isFinite(ms)?[{source,value,ms}]:[];
+ });
+ if(!times.length||(times.length===2&&Math.abs(times[0].ms-times[1].ms)>15*60000))return null;
+ return times[0];
+}
 function eventTimeOK(e,start,kind,now=Date.now()){
- const a=Date.parse(start),b=Date.parse(e?.startTime);if(!Number.isFinite(a)||!Number.isFinite(b)||Math.abs(a-b)>15*60*1000)return false;
+ const a=Date.parse(start),clock=eventClock(e),b=clock?.ms;if(!Number.isFinite(a)||!Number.isFinite(b)||Math.abs(a-b)>15*60*1000)return false;
  if(kind==='live'&&(b>now+3*60000||b<now-24*3600000))return false;
  if(kind==='prematch'&&b<=now+60000)return false;
  return true;
@@ -26,7 +39,7 @@ function matchingDiagnostic(data,query,now=Date.now()){
  const kind=query.kind||'prematch';
  const sameTeamsAndTime=sameTeams.filter(e=>eventTimeOK(e,query.start,kind,now));
  const verifiedCandidates=sameTeamsAndTime.filter(e=>eventKindOK(e,kind));
- const deltas=sameTeams.map(e=>Math.abs(Date.parse(e.startTime)-Date.parse(query.start))/60000).filter(Number.isFinite);
+ const deltas=sameTeams.map(e=>Math.abs(eventClock(e)?.ms-Date.parse(query.start))/60000).filter(Number.isFinite);
  let matchFailure='none';
  if(!events.length)matchFailure='empty_competition';
  else if(!named.length)matchFailure='team_names_unavailable';
@@ -36,6 +49,8 @@ function matchingDiagnostic(data,query,now=Date.now()){
  else if(verifiedCandidates.length>1)matchFailure='ambiguous_event';
  return {eventsSeen:events.length,eventsWithTeamNames:named.length,
   eventsWithStartTime:events.filter(e=>Number.isFinite(Date.parse(e?.startTime))).length,
+  eventsWithCutoffTime:events.filter(e=>Number.isFinite(Date.parse(e?.cutoffTime))).length,
+  eventsWithUsableTime:events.filter(e=>eventClock(e)!==null).length,
   homeNameMatches:named.filter(e=>sameTeam(e.home.name,query.home)).length,
   awayNameMatches:named.filter(e=>sameTeam(e.away.name,query.away)).length,
   sameTeams:sameTeams.length,sameTeamsAndTime:sameTeamsAndTime.length,
@@ -65,4 +80,4 @@ function extract1x2(e){
  // Both documented aliases may be present; accept identical prices only.
  return found.length&&found.every(o=>['home','draw','away'].every(k=>o[k]===found[0][k]))?found[0]:null;
 }
-module.exports={normalize,coreName,sameTeam,leagueParts,matchingCompetition,eventKindOK,eventTimeOK,sameEvent,matchingEvent,matchingDiagnostic,extract1x2};
+module.exports={normalize,coreName,sameTeam,leagueParts,matchingCompetition,eventKindOK,eventClock,eventTimeOK,sameEvent,matchingEvent,matchingDiagnostic,extract1x2};
