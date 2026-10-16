@@ -8,16 +8,31 @@ function leagueParts(s){const parts=String(s||'').split(/\s*[.]\s*/).filter(Bool
 function competitionName(country,name){
  const value=normalize(name);
  // Confirmed against the same Braga–Gil Vicente fixture in both feeds on 2026-10-16.
- return country==='portugal'&&['primeira liga','liga portugal'].includes(value)?'liga portugal':value;
+ if(country==='portugal'&&['primeira liga','liga portugal'].includes(value))return 'liga portugal';
+ if(country==='bulgaria'&&['first league','parva liga'].includes(value))return 'parva liga';
+ return value;
 }
 const providerTeamNames=new Map([
  ['spain|la liga',new Map([['deportivo de a coruna','RC Deportivo La Coruna']])],
  ['netherlands|eredivisie',new Map([['excelsior','Excelsior Rotterdam']])],
- ['germany|bundesliga',new Map([['1 koln','FC Koln']])]
+ ['germany|bundesliga',new Map([['1 koln','FC Koln']])],
+ // Reviewed against opponents and kickoff times on 2026-10-16.
+ ['bulgaria|parva liga',new Map([
+  ['cska sofia 1948','CSKA 1948 Sofia'],
+  ['dunav ruse','FC Dunav 2010'],
+  ['spartak varna','FK Spartak 1918 Varna'],
+  ['botev vratsa','POFC Botev Vratsa'],
+  ['lokomotiv plovdiv','PFC Lokomotiv Plovdiv'],
+  ['slavia sofia','PFC Slavia Sofia'],
+  ['cska sofia','PFC CSKA Sofia'],
+  ['ludogorets 1945','PFC Ludogorets 1945 Razgrad'],
+  ['cherno more varna','PFC Cherno More Varna'],
+  ['levski sofia','PFC Levski Sofia']
+ ])]
 ]);
 function providerQuery(query,league){
  const parts=leagueParts(league);
- const aliases=parts&&providerTeamNames.get(parts.country+'|'+parts.league);
+ const aliases=parts&&providerTeamNames.get(parts.country+'|'+competitionName(parts.country,parts.league));
  if(!aliases)return {...query};
  // Exact observed source names only, scoped to their competition. Qualifiers stay intact.
  return {...query,home:aliases.get(normalize(query.home))||query.home,away:aliases.get(normalize(query.away))||query.away};
