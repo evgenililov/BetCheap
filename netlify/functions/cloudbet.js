@@ -1,4 +1,5 @@
 "use strict";
+const commonMarkets=require('../../assets/common-markets');
 const {providerQuery,competitionMatch,matchingCompetition,matchingEvent,matchingDiagnostic,eventClock,sameEvent,extract1x2}=require('../lib/cloudbet-compare');
 const {competitionCoverage}=require('../lib/competition-coverage');
 const {catalogRows,fixturePage}=require('../lib/cloudbet-audit');
@@ -96,14 +97,15 @@ exports.handler=async event=>{
   // Feed API documents an explicit markets filter; on a missing main market,
   // retry ONLY the verified event and ONLY the full-time match-odds market.
   // Keep the original event verification; never infer event IDs or invent odds.
-  if(!odds){
+  const markets=commonMarkets.cloud(verified);
+  if(!odds&&!markets.length){
    stage='event-market';
    let fallback;try{fallback=await upstream('/events/'+encodeURIComponent(String(matched.id))+'?markets=soccer.matchOdds',key,10000)}catch(e){if(e.httpStatus!==400)throw e;}
    if(fallback){const second=fallback?.event||fallback;
     if(String(second?.id)!==String(matched.id)||!sameEvent(second,query))return answer(200,{ok:true,matched:false,reason:'individual_event_mismatch',provider:'Cloudbet'});
     odds=extract1x2(second);if(odds)verified=second;}
   }
-  if(!odds)return answer(200,{ok:true,matched:false,reason:'full_time_1x2_unavailable',provider:'Cloudbet',diagnostic:{marketKeyCount:Object.keys(verified.markets||{}).length,hasPrimaryKey:Boolean(verified.markets?.['soccer.match_odds']||verified.markets?.['soccer.matchOdds']),via:source}});
-  const seenAt=new Date().toISOString();return answer(200,{ok:true,matched:true,kind:q.kind,provider:'Cloudbet',source:'Cloudbet Affiliate Feed API',retrieval:source,competition:comp.name,home:verified.home.name,away:verified.away.name,start:eventClock(verified).value,timeSource:eventClock(verified).source,cloudbetEventId:String(verified.id),odds,checkedAt:seenAt,feedNotice:'Cloudbet affiliate odds may be up to 60s delayed; timestamps are fetch times, not synchronized market times. Markets may suspend. No automatic bet placement or unverified referral routing.'});
+  if(!odds&&!markets.length)return answer(200,{ok:true,matched:false,reason:'full_time_1x2_unavailable',provider:'Cloudbet',diagnostic:{marketKeyCount:Object.keys(verified.markets||{}).length,hasPrimaryKey:Boolean(verified.markets?.['soccer.match_odds']||verified.markets?.['soccer.matchOdds']),via:source}});
+  const seenAt=new Date().toISOString();return answer(200,{ok:true,matched:true,kind:q.kind,provider:'Cloudbet',source:'Cloudbet Affiliate Feed API',retrieval:source,competition:comp.name,home:verified.home.name,away:verified.away.name,start:eventClock(verified).value,timeSource:eventClock(verified).source,cloudbetEventId:String(verified.id),odds,markets:markets.length?markets:commonMarkets.cloud(verified),checkedAt:seenAt,feedNotice:'Cloudbet affiliate odds may be up to 60s delayed; timestamps are fetch times, not synchronized market times. Markets may suspend. No automatic bet placement or unverified referral routing.'});
  }catch(e){return answer(502,{ok:false,stage,...getError(e)});}
 };
