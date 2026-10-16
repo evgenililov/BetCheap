@@ -83,10 +83,13 @@ exports.handler=async event=>{
  if(q.kind==='prematch'&&(startTime<=now+60000||startTime>now+30*864e5))return answer(200,{ok:true,matched:false,reason:'not_upcoming',provider:'Cloudbet'});
  if(q.kind==='live'&&(startTime>now+3*60000||startTime<now-24*3600000))return answer(200,{ok:true,matched:false,reason:'not_in_live_window',provider:'Cloudbet'});
  let stage='catalog';try{
-  const data=await catalog(key),match=competitionMatch(data,league),comp=match.competition;if(!comp)return answer(200,{ok:true,matched:false,reason:'competition_not_verified',provider:'Cloudbet',diagnostic:{competitionFailure:match.reason,candidates:match.candidates}});
-  stage='competition';const fixture=await competition(key,comp.key,q.kind);
+  const data=await catalog(key),match=competitionMatch(data,league);let comp=match.competition;if(!comp)return answer(200,{ok:true,matched:false,reason:'competition_not_verified',provider:'Cloudbet',diagnostic:{competitionFailure:match.reason,candidates:match.candidates}});
+  stage='competition';const comps=match.competitions||[comp];
+  const lists=await Promise.all(comps.map(c=>competition(key,c.key,q.kind)));
+  const fixture={events:lists.flatMap(list=>list.events)};
   const query=providerQuery({home,away,start,kind:q.kind},league),matched=matchingEvent(fixture,query);
   if(!matched)return answer(200,{ok:true,matched:false,reason:'event_not_verified',provider:'Cloudbet',diagnostic:matchingDiagnostic(fixture,query)});
+  comp=comps[lists.findIndex(list=>list.events.includes(matched))];
   let odds=null,source='event-detail';let verified=matched;
   // Always fetch the selected event's available markets, never all markets for an entire competition.
   stage='individual';verified=await individual(key,matched.id,q.kind);if(String(verified.id)!==String(matched.id)||!sameEvent(verified,query))return answer(200,{ok:true,matched:false,reason:'individual_event_mismatch',provider:'Cloudbet'});odds=extract1x2(verified);

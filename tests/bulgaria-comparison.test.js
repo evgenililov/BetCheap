@@ -24,7 +24,7 @@ test('club aliases preserve CSKA identities and qualifiers',()=>{
   for(const suffix of [' Women',' U19',' II'])assert.equal(providerQuery({home:home+suffix},league).home,home+suffix);
   assert.equal(providerQuery({home},'Bulgaria. Second League').home,home);
  }
- assert.equal(providerQuery({home:'Lokomotiv Sofia'},league).home,'Lokomotiv Sofia'); // Still unverified: never guess.
+ assert.equal(providerQuery({home:'Lokomotiv Sofia'},league).home,'Lokomotive Sofia'); // Verified provider spelling.
  const start=new Date(Date.now()+86400000).toISOString();
  const event={status:'TRADING',cutoffTime:start,home:{name:q.away},away:{name:'Botev Plovdiv'}};
  assert.equal(matchingEvent({events:[event]},providerQuery({home:'CSKA Sofia',away:'Botev Plovdiv',start},league)),null);

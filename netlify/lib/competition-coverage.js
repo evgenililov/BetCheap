@@ -7,7 +7,7 @@ function competitionCoverage(catalog,providerResult,kind){
   const id=String(row?.tournamentId??'');
   if(!name||!/^\d+$/.test(id))return {id:null,name:null,status:'invalid_provider_entry',cloudbet:null};
   const match=competitionMatch(catalog,name);
-  return {id,name,status:match.reason,cloudbet:match.competition?{key:match.competition.key,name:match.competition.name}:null};
+  return {id,name,status:match.reason,cloudbet:match.competition?{key:match.competition.key,name:match.competition.name,...(match.competitions?.length>1?{alternatives:match.competitions.map(c=>({key:c.key,name:c.name}))}:{})}:null};
  });
  const counts={};for(const row of competitions)counts[row.status]=(counts[row.status]||0)+1;
  return {kind,scope:'competition_catalog_only',marketsChecked:false,

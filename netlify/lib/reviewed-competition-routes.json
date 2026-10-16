@@ -1,0 +1,1085 @@
+{
+  "africa cup of nations u20": [
+    {
+      "country": "International",
+      "name": "CAF African Championship U20",
+      "key": "soccer-international-tc294-caf-african-championship-u20"
+    }
+  ],
+  "argentina primera b metropolitana": [
+    {
+      "country": "Argentina",
+      "name": "Primera B",
+      "key": "soccer-argentina-primera-b"
+    }
+  ],
+  "argentina primera b nacional": [
+    {
+      "country": "Argentina",
+      "name": "Primera Nacional",
+      "key": "soccer-argentina-primera-nacional"
+    }
+  ],
+  "argentina primera c metropolitana": [
+    {
+      "country": "Argentina",
+      "name": "Primera C",
+      "key": "soccer-argentina-primera-c"
+    }
+  ],
+  "argentina primera division": [
+    {
+      "country": "Argentina",
+      "name": "Liga Profesional",
+      "key": "soccer-argentina-superliga"
+    }
+  ],
+  "australian championship": [
+    {
+      "country": "Australia",
+      "name": "Australia Championship",
+      "key": "soccer-australia-tb6c7-australia-championship"
+    }
+  ],
+  "austria ofv oberosterreich liga": [
+    {
+      "country": "Austria",
+      "name": "Austria Landesliga Oberosterreich",
+      "key": "soccer-austria-tbd38-austria-landesliga-oberosterreich"
+    }
+  ],
+  "austria regionalliga sud": [
+    {
+      "country": "Austria",
+      "name": "Austria Regionalliga South",
+      "key": "soccer-austria-tc32c-austria-regionalliga-south"
+    }
+  ],
+  "austria second league": [
+    {
+      "country": "Austria",
+      "name": "2. Liga",
+      "key": "soccer-austria-2-liga"
+    }
+  ],
+  "austria wfv landesliga": [
+    {
+      "country": "Austria",
+      "name": "Wien, Wiener Stadtliga",
+      "key": "soccer-austria-ta086-wien-wiener-stadtliga"
+    }
+  ],
+  "azerbaijan division 1": [
+    {
+      "country": "Azerbaijan",
+      "name": "First Division",
+      "key": "soccer-azerbaijan-first-division"
+    }
+  ],
+  "belarus premier league": [
+    {
+      "country": "Belarus",
+      "name": "Vysshaya Liga",
+      "key": "soccer-belarus-vysshaya-liga"
+    }
+  ],
+  "belgium championship women": [
+    {
+      "country": "Belgium",
+      "name": "Super League, Women",
+      "key": "soccer-belgium-super-league-women"
+    }
+  ],
+  "belgium cup": [
+    {
+      "country": "Belgium",
+      "name": "Beker van Belgie",
+      "key": "soccer-belgium-beker-van-belgie"
+    }
+  ],
+  "belgium division 1": [
+    {
+      "country": "Belgium",
+      "name": "Nationale 1 VV",
+      "key": "soccer-belgium-ta0cd-nationale-1-vv"
+    }
+  ],
+  "belgium youth league": [
+    {
+      "country": "Belgium",
+      "name": "U21 Pro League",
+      "key": "soccer-belgium-u21-pro-league"
+    }
+  ],
+  "bolivia primera division": [
+    {
+      "country": "Bolivia",
+      "name": "Division Profesional",
+      "key": "soccer-bolivia-division-profesional"
+    }
+  ],
+  "bosnia and herzegovina premier league": [
+    {
+      "country": "Bosnia & Herzegovina",
+      "name": "Premijer Liga",
+      "key": "soccer-bosnia-herzegovina-premijer-liga"
+    }
+  ],
+  "botswana championship": [
+    {
+      "country": "Botswana",
+      "name": "Premier League",
+      "key": "soccer-botswana-premier-league"
+    }
+  ],
+  "brazil campeonato brasileiro serie a": [
+    {
+      "country": "Brazil",
+      "name": "Brasileiro Serie A",
+      "key": "soccer-brazil-brasileiro-serie-a"
+    }
+  ],
+  "brazil campeonato brasileiro serie b": [
+    {
+      "country": "Brazil",
+      "name": "Brasileiro Serie B",
+      "key": "soccer-brazil-brasileiro-serie-b"
+    }
+  ],
+  "brazil campeonato brasileiro serie c": [
+    {
+      "country": "Brazil",
+      "name": "Brasileiro Serie C",
+      "key": "soccer-brazil-brasileiro-serie-c"
+    }
+  ],
+  "brazil campeonato carioca b": [
+    {
+      "country": "Brazil",
+      "name": "Carioca, Serie B1",
+      "key": "soccer-brazil-carioca-serie-b2"
+    }
+  ],
+  "brazil campeonato paulista u20": [
+    {
+      "country": "Brazil",
+      "name": "U20 Paulista",
+      "key": "soccer-brazil-u20-paulista"
+    }
+  ],
+  "brazil cup santa catarina": [
+    {
+      "country": "Brazil",
+      "name": "Copa Santa Catarina",
+      "key": "soccer-brazil-copa-santa-catarina"
+    }
+  ],
+  "caf confederation cup": [
+    {
+      "country": "International Clubs",
+      "name": "CAF Confederations Cup",
+      "key": "soccer-international-clubs-caf-confederations-cup"
+    }
+  ],
+  "canada premier league": [
+    {
+      "country": "Canada",
+      "name": "Canadian Premier League",
+      "key": "soccer-canada-canadian-premier-league"
+    }
+  ],
+  "chile cup": [
+    {
+      "country": "Chile",
+      "name": "Copa Chile",
+      "key": "soccer-chile-copa-chile"
+    }
+  ],
+  "china league one": [
+    {
+      "country": "China",
+      "name": "China League 1",
+      "key": "soccer-china-china-league"
+    }
+  ],
+  "china second league": [
+    {
+      "country": "China",
+      "name": "China League 2",
+      "key": "soccer-china-division-2"
+    }
+  ],
+  "china super league": [
+    {
+      "country": "China",
+      "name": "Chinese Super League",
+      "key": "soccer-china-chinese-super-league"
+    }
+  ],
+  "club friendlies": [
+    {
+      "country": "International Clubs",
+      "name": "Club Friendly Games",
+      "key": "soccer-international-clubs-club-friendly-games"
+    }
+  ],
+  "colombia categoria primera a": [
+    {
+      "country": "Colombia",
+      "name": "Primera A, Clausura",
+      "key": "soccer-colombia-primera-a-clausura"
+    }
+  ],
+  "colombia categoria primera b": [
+    {
+      "country": "Colombia",
+      "name": "Primera B",
+      "key": "soccer-colombia-primera-b"
+    }
+  ],
+  "costa rica primera division": [
+    {
+      "country": "Costa Rica",
+      "name": "Primera Division, Clausura",
+      "key": "soccer-costa-rica-primera-division-clausura"
+    }
+  ],
+  "croatia 1 nl": [
+    {
+      "country": "Croatia",
+      "name": "Prva NL",
+      "key": "soccer-croatia-2-hnl"
+    }
+  ],
+  "croatia 2 nl": [
+    {
+      "country": "Croatia",
+      "name": "Druga NL",
+      "key": "soccer-croatia-t8162-3-hnl-promotion-playoffs"
+    }
+  ],
+  "cyprus first division": [
+    {
+      "country": "Cyprus",
+      "name": "1st Division",
+      "key": "soccer-cyprus-1st-division"
+    }
+  ],
+  "cyprus second division": [
+    {
+      "country": "Cyprus",
+      "name": "2nd Division",
+      "key": "soccer-cyprus-2nd-division"
+    }
+  ],
+  "czech republic 2 liga": [
+    {
+      "country": "Czechia",
+      "name": "FNL",
+      "key": "soccer-czech-republic-fnl"
+    }
+  ],
+  "czech republic 3 liga": [
+    {
+      "country": "Czechia",
+      "name": "CFL",
+      "key": "soccer-czech-republic-cfl"
+    },
+    {
+      "country": "Czechia",
+      "name": "MSFL",
+      "key": "soccer-czech-republic-msfl"
+    }
+  ],
+  "czech republic 4 liga": [
+    {
+      "country": "Czechia",
+      "name": "Divize F",
+      "key": "soccer-czech-republic-t8f0f-divize-f"
+    }
+  ],
+  "czech republic chance liga": [
+    {
+      "country": "Czechia",
+      "name": "1. Liga",
+      "key": "soccer-czech-republic-1-liga"
+    }
+  ],
+  "denmark 1st division": [
+    {
+      "country": "Denmark",
+      "name": "1. Division",
+      "key": "soccer-denmark-1st-division"
+    }
+  ],
+  "ecuador serie a": [
+    {
+      "country": "Ecuador",
+      "name": "LigaPro Primera A",
+      "key": "soccer-ecuador-ligapro-primera-a"
+    }
+  ],
+  "egypt second division": [
+    {
+      "country": "Egypt",
+      "name": "Egypt Division 2 A",
+      "key": "soccer-egypt-tbb45-egypt-division-2-a"
+    }
+  ],
+  "el salvador primera division": [
+    {
+      "country": "El Salvador",
+      "name": "Primera Division, Clausura",
+      "key": "soccer-el-salvador-primera-division-clausura"
+    }
+  ],
+  "el salvador reserve league": [
+    {
+      "country": "El Salvador",
+      "name": "Primera Division, Reserves, Clausura",
+      "key": "soccer-el-salvador-t681c-u20-primera-division"
+    }
+  ],
+  "england league cup": [
+    {
+      "country": "England",
+      "name": "Carabao Cup",
+      "key": "soccer-england-efl-cup"
+    }
+  ],
+  "england northern league div one": [
+    {
+      "country": "International",
+      "name": "England Northern Division 1 North",
+      "key": "soccer-international-tb405-england-northern-division-1-north"
+    }
+  ],
+  "england premier league 2": [
+    {
+      "country": "England",
+      "name": "U21 Premier League 2",
+      "key": "soccer-england-premier-league-2"
+    }
+  ],
+  "england superleague women": [
+    {
+      "country": "England",
+      "name": "FA Women's Super League",
+      "key": "soccer-england-fa-women-s-super-league"
+    }
+  ],
+  "estonia meistriliiga": [
+    {
+      "country": "Estonia",
+      "name": "Premium Liiga",
+      "key": "soccer-estonia-premium-liiga"
+    }
+  ],
+  "finland ykkosliiga": [
+    {
+      "country": "Finland",
+      "name": "Ykkonen",
+      "key": "soccer-finland-ykkonen"
+    }
+  ],
+  "france ligue 1 women": [
+    {
+      "country": "France",
+      "name": "Division 1 Women",
+      "key": "soccer-france-division-1-women"
+    }
+  ],
+  "germany 2 bundesliga": [
+    {
+      "country": "Germany",
+      "name": "2nd Bundesliga",
+      "key": "soccer-germany-2nd-bundesliga"
+    }
+  ],
+  "germany bundesliga women": [
+    {
+      "country": "Germany",
+      "name": "Women Bundesliga",
+      "key": "soccer-germany-women-bundesliga"
+    }
+  ],
+  "germany dfb pokal": [
+    {
+      "country": "Germany",
+      "name": "DFB Pokal",
+      "key": "soccer-germany-dfb-pokal"
+    }
+  ],
+  "germany regionalliga nordost": [
+    {
+      "country": "Germany",
+      "name": "Regionalliga Northeast",
+      "key": "soccer-germany-regionalliga-northeast"
+    }
+  ],
+  "germany regionalliga sudwest": [
+    {
+      "country": "Germany",
+      "name": "Regionalliga Southwest",
+      "key": "soccer-germany-regionalliga-southwest"
+    }
+  ],
+  "ghana division 1": [
+    {
+      "country": "Ghana",
+      "name": "Division One",
+      "key": "soccer-ghana-division-one"
+    }
+  ],
+  "greece superleague": [
+    {
+      "country": "Greece",
+      "name": "Super League 1",
+      "key": "soccer-greece-super-league-1"
+    }
+  ],
+  "iceland urvalsdeild": [
+    {
+      "country": "Iceland",
+      "name": "Besta deild",
+      "key": "soccer-iceland-t9038-besta-deild"
+    }
+  ],
+  "india super league": [
+    {
+      "country": "India",
+      "name": "Indian Super League",
+      "key": "soccer-india-indian-super-league"
+    }
+  ],
+  "indonesia super league": [
+    {
+      "country": "Indonesia",
+      "name": "Liga 1",
+      "key": "soccer-indonesia-liga-1"
+    }
+  ],
+  "iraq stars league": [
+    {
+      "country": "Iraq",
+      "name": "Iraqi League",
+      "key": "soccer-iraq-iraqi-league"
+    }
+  ],
+  "ireland division 1": [
+    {
+      "country": "Republic Of Ireland",
+      "name": "First Division",
+      "key": "soccer-ireland-first-division"
+    }
+  ],
+  "ireland leinster league": [
+    {
+      "country": "Republic Of Ireland",
+      "name": "Leinster Senior League, Senior Division",
+      "key": "soccer-ireland-leinster-senior-league-senior-division"
+    }
+  ],
+  "ireland premier league": [
+    {
+      "country": "Republic Of Ireland",
+      "name": "Premier Division",
+      "key": "soccer-ireland-premier-division"
+    }
+  ],
+  "israel liga alef north": [
+    {
+      "country": "Israel",
+      "name": "Liga Alef",
+      "key": "soccer-israel-liga-alef"
+    }
+  ],
+  "israel liga leumit": [
+    {
+      "country": "Israel",
+      "name": "National League",
+      "key": "soccer-israel-national-league"
+    }
+  ],
+  "italy serie c group b": [
+    {
+      "country": "Italy",
+      "name": "Serie C, Group A",
+      "key": "soccer-italy-serie-c-group-c"
+    }
+  ],
+  "italy serie c group c": [
+    {
+      "country": "Italy",
+      "name": "Serie C, Group A",
+      "key": "soccer-italy-serie-c-group-c"
+    }
+  ],
+  "japan j league division 2": [
+    {
+      "country": "Japan",
+      "name": "J.League 2",
+      "key": "soccer-japan-j-league-2"
+    }
+  ],
+  "japan league 2 women": [
+    {
+      "country": "Japan",
+      "name": "Nadeshiko League, Div 2, Women",
+      "key": "soccer-japan-nadeshiko-league-div-2-women"
+    }
+  ],
+  "jordan championship division 1": [
+    {
+      "country": "Jordan",
+      "name": "Jordan 1st Division",
+      "key": "soccer-jordan-jordan-1st-division"
+    }
+  ],
+  "jordan championship women": [
+    {
+      "country": "Jordan",
+      "name": "Women League",
+      "key": "soccer-jordan-women-league"
+    }
+  ],
+  "jordan premier league": [
+    {
+      "country": "Jordan",
+      "name": "Jordan League",
+      "key": "soccer-jordan-jordan-league"
+    }
+  ],
+  "kazakhstan 1st division": [
+    {
+      "country": "Kazakhstan",
+      "name": "Pervaya Liga",
+      "key": "soccer-kazakhstan-pervaya-liga"
+    }
+  ],
+  "kosovo superleague u19": [
+    {
+      "country": "International",
+      "name": "Kosovo U19 League",
+      "key": "soccer-international-tc4a8-kosovo-u19-league"
+    }
+  ],
+  "lithuania a liga": [
+    {
+      "country": "Lithuania",
+      "name": "A Lyga",
+      "key": "soccer-lithuania-a-lyga"
+    }
+  ],
+  "lithuania championship league 1": [
+    {
+      "country": "Lithuania",
+      "name": "1 Lyga",
+      "key": "soccer-lithuania-1-lyga"
+    }
+  ],
+  "malaysia superleague": [
+    {
+      "country": "Malaysia",
+      "name": "Super League",
+      "key": "soccer-malaysia-super-league"
+    }
+  ],
+  "mexico championship u21": [
+    {
+      "country": "Mexico",
+      "name": "U21 Liga MX",
+      "key": "soccer-mexico-taf73-u21-liga-mx"
+    }
+  ],
+  "mexico division 4": [
+    {
+      "country": "Mexico",
+      "name": "Mexico Liga TDP",
+      "key": "soccer-mexico-tb46e-mexico-liga-tdp"
+    }
+  ],
+  "mexico liga de expansion mx": [
+    {
+      "country": "Mexico",
+      "name": "Liga de Expansion MX, Apertura",
+      "key": "soccer-mexico-liga-de-ascenso-apertura"
+    }
+  ],
+  "mexico liga mx": [
+    {
+      "country": "Mexico",
+      "name": "Liga MX, Apertura",
+      "key": "soccer-mexico-t90c7-liga-mx-apertura"
+    }
+  ],
+  "mexico liga mx women": [
+    {
+      "country": "Mexico",
+      "name": "Liga MX, Women, Apertura",
+      "key": "soccer-mexico-liga-mx-women-apertura"
+    }
+  ],
+  "moldova liga 1": [
+    {
+      "country": "Moldova",
+      "name": "Divizia A",
+      "key": "soccer-moldova-divizia-a"
+    }
+  ],
+  "montenegro first league": [
+    {
+      "country": "Montenegro",
+      "name": "1. CFL",
+      "key": "soccer-montenegro-1-cfl"
+    }
+  ],
+  "netherlands championship u21": [
+    {
+      "country": "Netherlands",
+      "name": "U21 KNVB, Divisie 1",
+      "key": "soccer-netherlands-t7270-u21-knvb-divisie-1"
+    }
+  ],
+  "new zealand championship": [
+    {
+      "country": "New Zealand",
+      "name": "National League",
+      "key": "soccer-new-zealand-premiership"
+    }
+  ],
+  "nigeria premier league": [
+    {
+      "country": "Nigeria",
+      "name": "NPFL",
+      "key": "soccer-nigeria-professional-league"
+    }
+  ],
+  "northern ireland ifa premiership": [
+    {
+      "country": "Northern Ireland",
+      "name": "Premiership",
+      "key": "soccer-northern-ireland-premiership"
+    }
+  ],
+  "norway adeccoligaen": [
+    {
+      "country": "Norway",
+      "name": "1st Division",
+      "key": "soccer-norway-1st-division"
+    }
+  ],
+  "norway championship u19": [
+    {
+      "country": "Norway",
+      "name": "U19 Leagues",
+      "key": "soccer-norway-u19-leagues"
+    }
+  ],
+  "panama division 2": [
+    {
+      "country": "Panama",
+      "name": "Liga Nacional de Ascenso",
+      "key": "soccer-panama-liga-nacional-de-ascenso"
+    }
+  ],
+  "panama liga panamena de futbol": [
+    {
+      "country": "Panama",
+      "name": "Liga Panamena de Futbol, Apertura",
+      "key": "soccer-panama-liga-panamena-de-futbol-apertura"
+    }
+  ],
+  "paraguay division intermedia": [
+    {
+      "country": "Paraguay",
+      "name": "Segunda Division",
+      "key": "soccer-paraguay-segunda-division"
+    }
+  ],
+  "paraguay primera division": [
+    {
+      "country": "Paraguay",
+      "name": "Division de Honor, Apertura",
+      "key": "soccer-paraguay-primera-division-apertura"
+    }
+  ],
+  "peru liga 1": [
+    {
+      "country": "Peru",
+      "name": "Primera Division",
+      "key": "soccer-peru-primera-division"
+    }
+  ],
+  "poland championship liga 1": [
+    {
+      "country": "Poland",
+      "name": "I Liga",
+      "key": "soccer-poland-i-liga"
+    }
+  ],
+  "poland championship liga 2": [
+    {
+      "country": "Poland",
+      "name": "II Liga",
+      "key": "soccer-poland-ii-liga"
+    }
+  ],
+  "poland championship liga 3": [
+    {
+      "country": "Poland",
+      "name": "III Liga, Group 3",
+      "key": "soccer-poland-iii-liga-group-3"
+    }
+  ],
+  "poland championship liga 4": [
+    {
+      "country": "Poland",
+      "name": "Poland 4. Liga",
+      "key": "soccer-poland-tb406-poland-4-liga"
+    }
+  ],
+  "portugal segunda liga": [
+    {
+      "country": "Portugal",
+      "name": "Liga Portugal 2",
+      "key": "soccer-portugal-segunda-liga"
+    }
+  ],
+  "qatar championship": [
+    {
+      "country": "Qatar",
+      "name": "Stars League",
+      "key": "soccer-qatar-stars-league"
+    }
+  ],
+  "romania liga 1": [
+    {
+      "country": "Romania",
+      "name": "Liga I",
+      "key": "soccer-romania-liga-i"
+    }
+  ],
+  "russia youth championship division a": [
+    {
+      "country": "Russia",
+      "name": "Youth League",
+      "key": "soccer-russia-youth-league"
+    }
+  ],
+  "russian championship league 1": [
+    {
+      "country": "Russia",
+      "name": "1. Liga",
+      "key": "soccer-russia-football-national-league"
+    }
+  ],
+  "rwanda national league": [
+    {
+      "country": "Rwanda",
+      "name": "Rwanda Premier League",
+      "key": "soccer-rwanda-rwanda-premier-league"
+    }
+  ],
+  "saudi arabia saudi professional league": [
+    {
+      "country": "Saudi Arabia",
+      "name": "Saudi Pro League",
+      "key": "soccer-saudi-arabia-saudi-prof-league"
+    }
+  ],
+  "scotland league one": [
+    {
+      "country": "Scotland",
+      "name": "League 1",
+      "key": "soccer-scotland-league-one"
+    }
+  ],
+  "scotland league two": [
+    {
+      "country": "Scotland",
+      "name": "League 2",
+      "key": "soccer-scotland-league-two"
+    }
+  ],
+  "scotland lowland league": [
+    {
+      "country": "International",
+      "name": "Scotland Lowland Football League",
+      "key": "soccer-international-tb3f5-scotland-lowland-football-league"
+    }
+  ],
+  "scotland premier league": [
+    {
+      "country": "Scotland",
+      "name": "Premiership",
+      "key": "soccer-scotland-premiership"
+    }
+  ],
+  "serbia 1st league": [
+    {
+      "country": "Serbia",
+      "name": "Prva Liga",
+      "key": "soccer-serbia-prva-liga"
+    }
+  ],
+  "serbia championship u19": [
+    {
+      "country": "Serbia",
+      "name": "U19 Serbian League",
+      "key": "soccer-serbia-u19-serbian-league"
+    }
+  ],
+  "simon bolivar cup": [
+    {
+      "country": "Bolivia",
+      "name": "Copa Simon Bolivar",
+      "key": "soccer-bolivia-nacional-b"
+    }
+  ],
+  "slovakia liga 2": [
+    {
+      "country": "Slovakia",
+      "name": "2. Liga",
+      "key": "soccer-slovakia-2-liga"
+    }
+  ],
+  "slovakia liga 3": [
+    {
+      "country": "Slovakia",
+      "name": "3. Liga",
+      "key": "soccer-slovakia-3-liga"
+    }
+  ],
+  "slovakia super league": [
+    {
+      "country": "Slovakia",
+      "name": "Superliga",
+      "key": "soccer-slovakia-superliga"
+    }
+  ],
+  "slovenia 2 snl": [
+    {
+      "country": "Slovenia",
+      "name": "2. Liga",
+      "key": "soccer-slovenia-2nd-liga"
+    }
+  ],
+  "slovenia league 1": [
+    {
+      "country": "Slovenia",
+      "name": "PrvaLiga",
+      "key": "soccer-slovenia-prvaliga"
+    }
+  ],
+  "south africa 1st division": [
+    {
+      "country": "South Africa",
+      "name": "Championship",
+      "key": "soccer-south-africa-t91b5-championship"
+    }
+  ],
+  "south africa premier soccer league": [
+    {
+      "country": "South Africa",
+      "name": "Premiership",
+      "key": "soccer-south-africa-t903e-premiership"
+    }
+  ],
+  "south korea k league 1": [
+    {
+      "country": "Republic Of Korea",
+      "name": "K-League 1",
+      "key": "soccer-south-korea-k-league-1"
+    }
+  ],
+  "south korea k league 2": [
+    {
+      "country": "Republic Of Korea",
+      "name": "K-League 2",
+      "key": "soccer-south-korea-k-league-2"
+    }
+  ],
+  "south korea league k4": [
+    {
+      "country": "Republic Of Korea",
+      "name": "South Korea K4 League",
+      "key": "soccer-south-korea-tb412-south-korea-k4-league"
+    }
+  ],
+  "spain primera division rfef group 1": [
+    {
+      "country": "Spain",
+      "name": "Primera Federacion",
+      "key": "soccer-spain-t717f-primera-division-rfef"
+    }
+  ],
+  "spain primera division rfef group 2": [
+    {
+      "country": "Spain",
+      "name": "Primera Federacion",
+      "key": "soccer-spain-t717f-primera-division-rfef"
+    }
+  ],
+  "spain segunda division rfef group 1": [
+    {
+      "country": "Spain",
+      "name": "Segunda Federacion",
+      "key": "soccer-spain-second-division-b"
+    }
+  ],
+  "spain segunda division rfef group 2": [
+    {
+      "country": "Spain",
+      "name": "Segunda Federacion",
+      "key": "soccer-spain-second-division-b"
+    }
+  ],
+  "spain segunda division rfef group 3": [
+    {
+      "country": "Spain",
+      "name": "Segunda Federacion",
+      "key": "soccer-spain-second-division-b"
+    }
+  ],
+  "spain segunda division rfef group 4": [
+    {
+      "country": "Spain",
+      "name": "Segunda Federacion",
+      "key": "soccer-spain-second-division-b"
+    }
+  ],
+  "spain segunda division rfef group 5": [
+    {
+      "country": "Spain",
+      "name": "Segunda Federacion",
+      "key": "soccer-spain-second-division-b"
+    }
+  ],
+  "sweden allsvenskan women": [
+    {
+      "country": "Sweden",
+      "name": "Damallsvenskan",
+      "key": "soccer-sweden-damallsvenskan"
+    }
+  ],
+  "sweden division 1": [
+    {
+      "country": "Sweden",
+      "name": "Ettan, Norra",
+      "key": "soccer-sweden-div-1-norra"
+    }
+  ],
+  "swiss cup": [
+    {
+      "country": "Switzerland",
+      "name": "Schweizer Cup",
+      "key": "soccer-switzerland-schweizer-cup"
+    }
+  ],
+  "switzerland championship women": [
+    {
+      "country": "Switzerland",
+      "name": "Super League, Women",
+      "key": "soccer-switzerland-nla-women"
+    }
+  ],
+  "switzerland superleague": [
+    {
+      "country": "Switzerland",
+      "name": "Super League",
+      "key": "soccer-switzerland-super-league"
+    }
+  ],
+  "thailand thai premier league": [
+    {
+      "country": "Thailand",
+      "name": "Thai League 1",
+      "key": "soccer-thailand-thai-league-1"
+    }
+  ],
+  "turkey paf league u19": [
+    {
+      "country": "Turkey",
+      "name": "U19 Elit A",
+      "key": "soccer-turkey-u19-lig-elit-a"
+    }
+  ],
+  "turkey superliga": [
+    {
+      "country": "Turkey",
+      "name": "Super Lig",
+      "key": "soccer-turkey-super-lig"
+    }
+  ],
+  "turkey tff 1 lig": [
+    {
+      "country": "Turkey",
+      "name": "1. Lig",
+      "key": "soccer-turkey-1-lig"
+    }
+  ],
+  "uae championship u21": [
+    {
+      "country": "United Arab Emirates",
+      "name": "U21 League",
+      "key": "soccer-united-arab-emirates-u21-league"
+    }
+  ],
+  "uae division 1": [
+    {
+      "country": "United Arab Emirates",
+      "name": "Division 1",
+      "key": "soccer-united-arab-emirates-division-1"
+    }
+  ],
+  "uae division 2": [
+    {
+      "country": "United Arab Emirates",
+      "name": "Division 2",
+      "key": "soccer-united-arab-emirates-division-2-group-a"
+    }
+  ],
+  "uae pro league": [
+    {
+      "country": "United Arab Emirates",
+      "name": "Arabian Gulf League",
+      "key": "soccer-united-arab-emirates-arabian-gulf-league"
+    }
+  ],
+  "usa mls": [
+    {
+      "country": "USA",
+      "name": "Major League Soccer",
+      "key": "soccer-usa-major-league-soccer"
+    }
+  ],
+  "usa nwsl women": [
+    {
+      "country": "USA",
+      "name": "National Womens Soccer League",
+      "key": "soccer-usa-national-womens-soccer-league"
+    }
+  ],
+  "usa usl": [
+    {
+      "country": "USA",
+      "name": "USL Championship",
+      "key": "soccer-usa-usl-championship"
+    }
+  ],
+  "uzbekistan professional league": [
+    {
+      "country": "Uzbekistan",
+      "name": "Superliga",
+      "key": "soccer-uzbekistan-pfl"
+    }
+  ],
+  "welsh cup": [
+    {
+      "country": "Wales",
+      "name": "FAW Welsh Cup",
+      "key": "soccer-wales-faw-welsh-cup"
+    }
+  ]
+}

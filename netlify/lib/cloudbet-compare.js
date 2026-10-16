@@ -1,6 +1,8 @@
 "use strict";
 // Provider-grounded match and FULL TIME 1X2 matching. Never manufacture odds or cross-map teams.
 const normalize=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/ß/g,'ss').replace(/æ/g,'ae').replace(/ø/g,'o').replace(/ł/g,'l').replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
+const reviewedRoutes=require('./reviewed-competition-routes.json');
+const reviewedNames=require('./reviewed-fixture-names.json');
 const CLUB_WORDS=new Set(['fc','afc','sc','cf','sv','vfb','fk','fkf','football','club']);
 const coreName=v=>normalize(v).split(' ').filter(x=>!CLUB_WORDS.has(x)).join(' ');
 function sameTeam(a,b){const n1=normalize(a),n2=normalize(b);if(!n1||!n2)return false;return n1===n2||(coreName(a).length>=4&&coreName(a)===coreName(b));}
@@ -33,14 +35,29 @@ const providerTeamNames=new Map([
 ]);
 function providerQuery(query,league){
  const parts=leagueParts(league);
- const aliases=parts&&providerTeamNames.get(parts.country+'|'+competitionName(parts.country,parts.league));
+ const legacy=parts&&providerTeamNames.get(parts.country+'|'+competitionName(parts.country,parts.league));
+ const scope=normalize(league),reviewed=Object.hasOwn(reviewedNames,scope)?reviewedNames[scope]:null;
+ const aliases=reviewed?new Map([...(legacy||[]),...Object.entries(reviewed)]):legacy;
  if(!aliases)return {...query};
- // Exact observed source names only, scoped to their competition. Qualifiers stay intact.
+ // Exact reviewed source names and competition scopes only; never strip qualifiers generically.
  return {...query,home:aliases.get(normalize(query.home))||query.home,away:aliases.get(normalize(query.away))||query.away};
 }
 function competitionMatch(data,league){
  const fullName=normalize(league),expected=leagueParts(league);
  if(!fullName)return {competition:null,reason:'invalid_competition_name',candidates:0};
+ const routes=Object.hasOwn(reviewedRoutes,fullName)?reviewedRoutes[fullName]:null;
+ if(routes){
+  // Explicitly reviewed provider containers; a league may span regional groups.
+  // Bind key AND category/name. Never fuzzy-match or silently accept renamed data.
+  const competitions=[];
+  for(const route of routes){
+   const matches=(data?.categories||[]).flatMap(category=>normalize(category.name)===normalize(route.country)?(category.competitions||[]).filter(c=>c.key===route.key&&normalize(c.name)===normalize(route.name)):[]);
+   if(matches.length!==1)return {competition:null,reason:'reviewed_competition_unavailable',candidates:matches.length};
+   competitions.push(matches[0]);
+  }
+  if(!competitions.length||competitions.length>4)return {competition:null,reason:'invalid_reviewed_routes',candidates:0};
+  return {competition:competitions[0],competitions,reason:'matched',candidates:competitions.length};
+ }
  const found=[];let countries=0;
  for(const category of data?.categories||[]){
   if(expected&&normalize(category.name)!==expected.country)continue;
