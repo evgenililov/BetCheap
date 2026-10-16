@@ -5,7 +5,24 @@ const CLUB_WORDS=new Set(['fc','afc','sc','cf','sv','vfb','fk','fkf','football',
 const coreName=v=>normalize(v).split(' ').filter(x=>!CLUB_WORDS.has(x)).join(' ');
 function sameTeam(a,b){const n1=normalize(a),n2=normalize(b);if(!n1||!n2)return false;return n1===n2||(coreName(a).length>=4&&coreName(a)===coreName(b));}
 function leagueParts(s){const parts=String(s||'').split(/\s*[.]\s*/).filter(Boolean);return parts.length>=2?{country:normalize(parts[0]),league:normalize(parts.slice(1).join(' '))}:null;}
-function matchingCompetition(data,league){const expected=leagueParts(league);if(!expected)return null;const found=[];for(const category of data?.categories||[]){if(normalize(category.name)!==expected.country)continue;for(const c of category.competitions||[]){if(normalize(c.name)===expected.league&&typeof c.key==='string'&&/^[a-z0-9-]+$/.test(c.key))found.push(c);}}return found.length===1?found[0]:null;}
+function competitionMatch(data,league){
+ const fullName=normalize(league),expected=leagueParts(league);
+ if(!fullName)return {competition:null,reason:'invalid_competition_name',candidates:0};
+ const found=[];let countries=0;
+ for(const category of data?.categories||[]){
+  if(expected&&normalize(category.name)!==expected.country)continue;
+  countries++;
+  for(const c of category.competitions||[]){
+   if(normalize(c.name)!==(expected?expected.league:fullName)||typeof c.key!=='string'||!/^[a-z0-9-]+$/.test(c.key))continue;
+   found.push(c);
+  }
+ }
+ // Country-less names such as UEFA Champions League must match the complete
+ // provider name uniquely. Never drop Women/U19/Reserve/Winner/SRL qualifiers.
+ if(found.length===1)return {competition:found[0],reason:'matched',candidates:1};
+ return {competition:null,reason:found.length?'ambiguous_competition':expected&&!countries?'country_not_found':'competition_not_found',candidates:found.length};
+}
+function matchingCompetition(data,league){return competitionMatch(data,league).competition;}
 function eventKindOK(e,kind){return e?.status===(kind==='live'?'TRADING_LIVE':'TRADING')}
 // Current Cloudbet Feed protobuf exposes cutoff_time, encoded as cutoffTime by protojson.
 // https://github.com/cloudbet/docs/blob/c3024e079db1d64684f742fbf7e26663aa3d8d36/cloudbet/feed.proto
@@ -80,4 +97,4 @@ function extract1x2(e){
  // Both documented aliases may be present; accept identical prices only.
  return found.length&&found.every(o=>['home','draw','away'].every(k=>o[k]===found[0][k]))?found[0]:null;
 }
-module.exports={normalize,coreName,sameTeam,leagueParts,matchingCompetition,eventKindOK,eventClock,eventTimeOK,sameEvent,matchingEvent,matchingDiagnostic,extract1x2};
+module.exports={normalize,coreName,sameTeam,leagueParts,competitionMatch,matchingCompetition,eventKindOK,eventClock,eventTimeOK,sameEvent,matchingEvent,matchingDiagnostic,extract1x2};

@@ -1,5 +1,6 @@
 "use strict";
-const {matchingCompetition,matchingEvent,matchingDiagnostic,eventClock,sameEvent,extract1x2}=require('../lib/cloudbet-compare');
+const {competitionMatch,matchingCompetition,matchingEvent,matchingDiagnostic,eventClock,sameEvent,extract1x2}=require('../lib/cloudbet-compare');
+const {competitionCoverage}=require('../lib/competition-coverage');
 const URL_BASE='https://sports-api.cloudbet.com/pub/v2/odds';
 const answer=(statusCode,payload)=>({statusCode,headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer'},body:JSON.stringify(payload)});
 const clean=(v,max)=>typeof v==='string'&&v.length<=max?v.trim():'';
@@ -19,6 +20,23 @@ exports.handler=async event=>{
  const key=process.env.CLOUDBET_API_KEY;const op=event.queryStringParameters?.op||'status';
  if(op==='status')return answer(200,{ok:true,configured:!!key,provider:'Cloudbet Affiliate Feed API',verifiedLive:false,feedLagNotice:'Affiliate odds may be delayed up to 60 seconds.'});
  if(!key)return answer(503,{ok:false,error:'cloudbet_not_configured'});
+ if(op==='coverage'){
+  const kind=event.queryStringParameters?.kind||'all';
+  if(!['all','prematch','live'].includes(kind))return answer(400,{ok:false,error:'invalid_kind'});
+  const kinds=kind==='all'?['prematch','live']:[kind];
+  let stage='catalog';
+  try{
+   const data=await catalog(key);stage='onexbet-catalog';
+   const onexbet=require('./onexbet');
+   const results=await Promise.all(kinds.map(async mode=>{
+    const response=await onexbet.handler({httpMethod:'GET',queryStringParameters:{op:'tournaments',sportId:'1',kind:mode,lng:'en'}});
+    if(response.statusCode!==200)return {kind:mode,ok:false,error:'onexbet_catalog_unavailable',status:response.statusCode};
+    return {ok:true,...competitionCoverage(data,JSON.parse(response.body),mode)};
+   }));
+   const complete=results.every(r=>r.ok&&!r.possiblyTruncated);
+   return answer(200,{ok:results.every(r=>r.ok),catalogComplete:complete,scope:'football_competition_catalogs',marketsChecked:false,generatedAt:new Date().toISOString(),results});
+  }catch(e){return answer(502,{ok:false,stage,...(stage==='catalog'?getError(e):{error:'onexbet_catalog_invalid'})});}
+ }
  if(op==='probe'){
   let stage='catalog';try{
    const data=await catalog(key),league=matchingCompetition(data,'England. Premier League');if(!league)return answer(200,{ok:true,authenticated:true,competitionFound:false});
@@ -53,7 +71,7 @@ exports.handler=async event=>{
  if(q.kind==='prematch'&&(startTime<=now+60000||startTime>now+30*864e5))return answer(200,{ok:true,matched:false,reason:'not_upcoming',provider:'Cloudbet'});
  if(q.kind==='live'&&(startTime>now+3*60000||startTime<now-24*3600000))return answer(200,{ok:true,matched:false,reason:'not_in_live_window',provider:'Cloudbet'});
  let stage='catalog';try{
-  const data=await catalog(key),comp=matchingCompetition(data,league);if(!comp)return answer(200,{ok:true,matched:false,reason:'competition_not_verified',provider:'Cloudbet'});
+  const data=await catalog(key),match=competitionMatch(data,league),comp=match.competition;if(!comp)return answer(200,{ok:true,matched:false,reason:'competition_not_verified',provider:'Cloudbet',diagnostic:{competitionFailure:match.reason,candidates:match.candidates}});
   stage='competition';const fixture=await competition(key,comp.key,q.kind);
   const query={home,away,start,kind:q.kind},matched=matchingEvent(fixture,query);
   if(!matched)return answer(200,{ok:true,matched:false,reason:'event_not_verified',provider:'Cloudbet',diagnostic:matchingDiagnostic(fixture,query)});
