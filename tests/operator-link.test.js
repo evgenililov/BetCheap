@@ -20,3 +20,9 @@ test('Wrong section, unsupported operator, and non-GET requests are handled safe
  assert.equal((await handler({httpMethod:'POST'})).statusCode,405);
 });
 test.after(()=>{onexbet.fetchEventForRouting=original});
+test('Betsson preserves the stored partner code and ignores browser destinations',async()=>{
+ const r=await request({operator:'betsson',url:'https://evil.test',eventId:'123',kind:'live'});
+ assert.equal(r.statusCode,302);
+ assert.equal(r.headers.Location,'https://record.betsson.com/_8JVLVBbqlwjlRqYtzC2ttWNd7ZgqdRLk/1/');
+ assert.equal(r.headers['X-BetCheap-Link-Kind'],'affiliate');
+});
