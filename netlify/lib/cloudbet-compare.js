@@ -18,6 +18,32 @@ function sameEvent(e,q,now=Date.now()){
  return sameTeam(e.home?.name,q.home)&&sameTeam(e.away?.name,q.away);
 }
 function matchingEvent(data,query,now=Date.now()){const found=(data?.events||[]).filter(e=>sameEvent(e,query,now));return found.length===1?found[0]:null;}
+// Explain a failed match with aggregate counts only. No raw fixtures, IDs or credentials.
+function matchingDiagnostic(data,query,now=Date.now()){
+ const events=Array.isArray(data?.events)?data.events:[];
+ const named=events.filter(e=>typeof e?.home?.name==='string'&&typeof e?.away?.name==='string');
+ const sameTeams=named.filter(e=>sameTeam(e.home.name,query.home)&&sameTeam(e.away.name,query.away));
+ const kind=query.kind||'prematch';
+ const sameTeamsAndTime=sameTeams.filter(e=>eventTimeOK(e,query.start,kind,now));
+ const verifiedCandidates=sameTeamsAndTime.filter(e=>eventKindOK(e,kind));
+ const deltas=sameTeams.map(e=>Math.abs(Date.parse(e.startTime)-Date.parse(query.start))/60000).filter(Number.isFinite);
+ let matchFailure='none';
+ if(!events.length)matchFailure='empty_competition';
+ else if(!named.length)matchFailure='team_names_unavailable';
+ else if(!sameTeams.length)matchFailure='team_pair_not_found';
+ else if(!sameTeamsAndTime.length)matchFailure='start_time_mismatch';
+ else if(!verifiedCandidates.length)matchFailure='trading_status_mismatch';
+ else if(verifiedCandidates.length>1)matchFailure='ambiguous_event';
+ return {eventsSeen:events.length,eventsWithTeamNames:named.length,
+  eventsWithStartTime:events.filter(e=>Number.isFinite(Date.parse(e?.startTime))).length,
+  homeNameMatches:named.filter(e=>sameTeam(e.home.name,query.home)).length,
+  awayNameMatches:named.filter(e=>sameTeam(e.away.name,query.away)).length,
+  sameTeams:sameTeams.length,sameTeamsAndTime:sameTeamsAndTime.length,
+  sameTeamsAndStatus:sameTeams.filter(e=>eventKindOK(e,kind)).length,
+  reversedTeams:named.filter(e=>sameTeam(e.home.name,query.away)&&sameTeam(e.away.name,query.home)).length,
+  verifiedCandidates:verifiedCandidates.length,
+  closestStartDeltaMinutes:deltas.length?Math.round(Math.min(...deltas)):null,matchFailure};
+}
 function extract1x2(e){
  if(!e?.markets||typeof e.markets!=='object')return null;
  const found=[];
@@ -39,4 +65,4 @@ function extract1x2(e){
  // Both documented aliases may be present; accept identical prices only.
  return found.length&&found.every(o=>['home','draw','away'].every(k=>o[k]===found[0][k]))?found[0]:null;
 }
-module.exports={normalize,coreName,sameTeam,leagueParts,matchingCompetition,eventKindOK,eventTimeOK,sameEvent,matchingEvent,extract1x2};
+module.exports={normalize,coreName,sameTeam,leagueParts,matchingCompetition,eventKindOK,eventTimeOK,sameEvent,matchingEvent,matchingDiagnostic,extract1x2};

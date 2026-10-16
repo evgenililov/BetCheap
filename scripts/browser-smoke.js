@@ -47,6 +47,7 @@ const assert=require('node:assert/strict');
   await page.waitForFunction(()=>document.getElementById('cloudbetCompareText').textContent.includes('No second quote'));
   assert.equal(await page.locator('#cloudbetCompareOdds a').count(),3);
   assert.match(await page.locator('#cloudbetCompareOdds').innerText(),/Not comparable/);
+  for(let i=1;i<=3;i++)assert.equal(await page.locator('#cloudbetCompareOdds tr').nth(i).locator('td').nth(2).innerText(),'—');
   await page.locator('#modeLive').click();
   await page.locator('#leagueSelect').selectOption('10');
   await page.locator('#loadMatches').click();
