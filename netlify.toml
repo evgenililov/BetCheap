@@ -1,5 +1,6 @@
 [build]
-  publish = "."
+  command = "npm run build"
+  publish = "dist"
   functions = "netlify/functions"
 [[headers]]
   for = "/*"
@@ -19,3 +20,9 @@
   to = "/index.html"
   status = 200
   force = true
+
+[functions]
+  node_bundler = "esbuild"
+
+[functions."telegram-publish"]
+  schedule = "0 12 * * *"
