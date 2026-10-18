@@ -74,3 +74,25 @@ test('public status distinguishes configuration errors without revealing secret 
   }
  }finally{process.env.TELEGRAM_WEBHOOK_SECRET=previous}
 });
+test('admin failures identify the stage without reflecting Telegram descriptions or tokens',async()=>{
+ const fn=require('../netlify/lib/telegram-admin-handler').handler,db=store(),original=s.storage;s.storage=()=>db;
+ try{
+  global.fetch=async()=>({ok:false,status:401,json:async()=>({ok:false,error_code:401,description:'Unauthorized test-token'})});
+  let r=await fn(request({action:'status'})),d=JSON.parse(r.body);assert.equal(d.stage,'bot_identity');assert.equal(d.reason,'telegram_token_rejected');assert(!r.body.includes('test-token'));
+  global.fetch=async url=>({ok:true,json:async()=>url.endsWith('getMe')?{ok:true,result:{id:99,username:'BetCheapBot'}}:{ok:false,error_code:400,description:'Bad Request: chat not found'}});
+  d=JSON.parse((await fn(request({action:'status'}))).body);assert.equal(d.stage,'channel_membership');assert.equal(d.reason,'telegram_channel_not_found');
+  s.storage=()=>{const e=new Error('secret storage details');e.name='MissingBlobsEnvironmentError';throw e};
+  r=await fn(request({action:'status'}));d=JSON.parse(r.body);assert.equal(d.stage,'storage_init');assert.equal(d.reason,'blobs_environment_missing');assert(!r.body.includes('secret storage details'));
+ }finally{s.storage=original}
+});
+test('public health probe only reads state, caches concurrent requests and strips metadata',async()=>{
+ const {default:health}=await import('../netlify/functions/telegram-health.mjs');
+ const db=store(),original=s.storage;s.storage=()=>db;const calls=[];
+ global.fetch=async url=>{const method=url.split('/').pop();calls.push(method);return {ok:true,json:async()=>({ok:true,result:method==='getMe'?{id:99,username:'BetCheapBot'}:method==='getChatMember'?{status:'administrator',can_post_messages:true}:{url:s.APP+'/.netlify/functions/telegram',pending_update_count:999}})}};
+ try{
+  assert.equal((await health(new Request('https://example.test',{method:'POST'}))).status,405);assert.equal(calls.length,0);
+  const [a,b]=await Promise.all([health(new Request('https://example.test')),health(new Request('https://example.test'))]);
+  const d=await a.json();assert.equal(d.canPost,true);assert.equal(d.webhookCorrect,true);assert.equal(d.publishingEnabled,false);assert(!('pendingUpdates' in d));assert(!JSON.stringify(d).includes('test-token'));assert.equal(b.status,200);
+  assert.deepEqual(calls,['getMe','getChatMember','getWebhookInfo']);
+ }finally{s.storage=original}
+});

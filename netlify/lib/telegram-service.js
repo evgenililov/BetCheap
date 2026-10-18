@@ -34,7 +34,12 @@ async function telegram(method,body){
  if(!token)throw Error('telegram_not_configured');
  const r=await fetch('https://api.telegram.org/bot'+token+'/'+method,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:AbortSignal.timeout(10000),redirect:'error'});
  let data;try{data=await r.json()}catch{throw Error('telegram_invalid_response')}
- if(!r.ok||data?.ok!==true)throw Error('telegram_request_failed');
+ if(!r.ok||data?.ok!==true){
+  const e=new Error('telegram_request_failed');e.telegramStatus=Number(data?.error_code)||r.status;
+  const description=typeof data?.description==='string'?data.description:'';
+  e.safeReason=e.telegramStatus===401?'telegram_token_rejected':e.telegramStatus===429?'telegram_rate_limited':/chat not found/i.test(description)?'telegram_channel_not_found':/not enough rights|not a member|administrator rights/i.test(description)?'telegram_channel_permission_denied':'telegram_request_rejected';
+  throw e;
+ }
  return data.result;
 }
 function appLink(e){return APP+'/compare?'+new URLSearchParams({kind:'prematch',tournamentId:String(e.tournamentId),eventId:String(e.sportEventId)})}
