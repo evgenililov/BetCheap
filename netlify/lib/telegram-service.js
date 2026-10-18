@@ -4,6 +4,13 @@ const APP='https://betcheap.netlify.app';
 const CHANNEL='@BetCheapOdds';
 const BOT='BetCheapBot';
 const FOOTER='18+ · Gamble responsibly · Affiliate links. Odds may change; confirm at the operator. Cloudbet may lag up to 60s.';
+function secretStatus(){
+ const value=process.env.TELEGRAM_WEBHOOK_SECRET;
+ if(typeof value!=='string'||value.length===0)return 'missing';
+ if(value.length<32||value.length>256)return 'invalid_length';
+ if(!/^[A-Za-z0-9_-]+$/.test(value))return 'invalid_characters';
+ return 'valid';
+}
 function authorized(event){
  const expected=process.env.TELEGRAM_WEBHOOK_SECRET||'';
  const h=Object.fromEntries(Object.entries(event.headers||{}).map(([k,v])=>[k.toLowerCase(),v]));
@@ -37,4 +44,4 @@ function storage(event){const {getStore}=require('@netlify/blobs');return getSto
 async function claim(store,key){return (await store.setJSON(key,{at:new Date().toISOString()},{onlyIfNew:true})).modified}
 function chatHash(chatId){return createHmac('sha256',process.env.TELEGRAM_WEBHOOK_SECRET).update(String(chatId)).digest('hex').slice(0,24)}
 const response=(statusCode,body)=>({statusCode,headers:{'Content-Type':'application/json','Cache-Control':'no-store'},body:JSON.stringify(body)});
-module.exports={APP,CHANNEL,BOT,FOOTER,authorized,parse,command,telegram,send,storage,claim,chatHash,buttons,appLink,response};
+module.exports={APP,CHANNEL,BOT,FOOTER,secretStatus,authorized,parse,command,telegram,send,storage,claim,chatHash,buttons,appLink,response};

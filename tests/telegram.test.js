@@ -63,3 +63,14 @@ test('admin validates bot identity and channel rights; activation registers webh
  await fn(request({action:'pause'}));assert.equal((await db.get('settings')).publishingEnabled,false);
  }finally{s.storage=original}
 });
+test('public status distinguishes configuration errors without revealing secret data',async()=>{
+ const fn=require('../netlify/functions/telegram').handler,previous=process.env.TELEGRAM_WEBHOOK_SECRET;
+ try{
+  for(const [value,expected] of [['','missing'],['fixture-short','invalid_length'],['x'.repeat(64)+' ','invalid_characters'],['x'.repeat(64),'valid']]){
+   process.env.TELEGRAM_WEBHOOK_SECRET=value;
+   const r=await fn({httpMethod:'GET'}),data=JSON.parse(r.body);
+   assert.equal(data.webhookSecretStatus,expected);assert.equal(data.webhookSecretConfigured,expected==='valid');
+   if(value)assert(!r.body.includes(value));
+  }
+ }finally{process.env.TELEGRAM_WEBHOOK_SECRET=previous}
+});

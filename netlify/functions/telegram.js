@@ -1,7 +1,7 @@
 'use strict';
 const s=require('../lib/telegram-service');
 exports.handler=async event=>{
- if(event.httpMethod==='GET')return s.response(200,{bot:s.BOT,channel:s.CHANNEL,configured:!!process.env.TELEGRAM_BOT_TOKEN,webhookSecretConfigured:/^[A-Za-z0-9_-]{32,256}$/.test(process.env.TELEGRAM_WEBHOOK_SECRET||''),version:'2.46.0',liveConnectionVerified:false});
+ if(event.httpMethod==='GET')return s.response(200,{bot:s.BOT,channel:s.CHANNEL,configured:!!process.env.TELEGRAM_BOT_TOKEN,webhookSecretConfigured:s.secretStatus()==='valid',webhookSecretStatus:s.secretStatus(),diagnosticsVersion:2,version:'2.46.0',liveConnectionVerified:false});
  if(event.httpMethod!=='POST')return s.response(405,{error:'method_not_allowed'});
  if(!s.authorized(event))return s.response(401,{error:'unauthorized'});
  let update;try{update=s.parse(event)}catch{return s.response(400,{error:'invalid_update'})}
