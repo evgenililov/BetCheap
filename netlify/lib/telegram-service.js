@@ -45,7 +45,7 @@ async function telegram(method,body){
 function appLink(e){return APP+'/compare?'+new URLSearchParams({kind:'prematch',tournamentId:String(e.tournamentId),eventId:String(e.sportEventId)})}
 function buttons(e){return {inline_keyboard:e?[[{text:'Compare all markets ↗',url:appLink(e)}],[{text:'1xBet ↗',url:APP+'/.netlify/functions/operator-link?operator=onexbet&kind=prematch&eventId='+e.sportEventId},{text:'Cloudbet ↗',url:APP+'/.netlify/functions/operator-link?operator=cloudbet'}]]:[[{text:'Open BetCheap ↗',url:APP}],[{text:'Follow BetCheapOdds',url:'https://t.me/BetCheapOdds'}]]}}
 async function send(chatId,payload){return telegram('sendMessage',{chat_id:chatId,...payload,link_preview_options:{is_disabled:true}})}
-function storage(event){const {getStore}=require('@netlify/blobs');return getStore({name:'betcheap-telegram',consistency:'strong'})}
+async function storage(event){const {getStore}=await import('@netlify/blobs');return getStore({name:'betcheap-telegram',consistency:'strong'})}
 async function claim(store,key){return (await store.setJSON(key,{at:new Date().toISOString()},{onlyIfNew:true})).modified}
 function chatHash(chatId){return createHmac('sha256',process.env.TELEGRAM_WEBHOOK_SECRET).update(String(chatId)).digest('hex').slice(0,24)}
 const response=(statusCode,body)=>({statusCode,headers:{'Content-Type':'application/json','Cache-Control':'no-store'},body:JSON.stringify(body)});

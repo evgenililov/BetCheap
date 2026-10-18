@@ -6,7 +6,7 @@ exports.handler=async event=>{
  if(!['activate','status','pause'].includes(action))return s.response(400,{error:'invalid_action'});
  let stage='storage_init';
  try{
-  const store=s.storage(event);
+  const store=await s.storage(event);
   if(action==='pause'){stage='settings_write';await store.setJSON('settings',{publishingEnabled:false});return s.response(200,{ok:true,publishingEnabled:false})}
   stage='bot_identity';
   const me=await s.telegram('getMe',{});
@@ -34,6 +34,6 @@ exports.handler=async event=>{
  }catch(e){
   const known=['telegram_token_rejected','telegram_rate_limited','telegram_channel_not_found','telegram_channel_permission_denied','telegram_request_rejected'];
   const reason=known.includes(e.safeReason)?e.safeReason:e.name==='MissingBlobsEnvironmentError'?'blobs_environment_missing':e.name==='BlobsConsistencyError'?'blobs_consistency_unavailable':['AbortError','TimeoutError'].includes(e.name)?'upstream_timeout':'upstream_or_storage_failure';
-  return s.response(502,{error:'activation_or_status_failed',stage,reason,...(Number.isInteger(e.telegramStatus)?{upstreamStatus:e.telegramStatus}:{})});
+  return s.response(502,{error:'activation_or_status_failed',stage,reason,errorType:/^[A-Za-z][A-Za-z0-9_]{0,60}$/.test(e.name||'')?e.name:'Error',runtimeCode:/^[A-Z][A-Z0-9_]{0,60}$/.test(e.code||'')?e.code:undefined,nodeVersion:process.versions.node,...(Number.isInteger(e.telegramStatus)?{upstreamStatus:e.telegramStatus}:{})});
  }
 };

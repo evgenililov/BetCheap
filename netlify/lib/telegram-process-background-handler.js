@@ -5,7 +5,7 @@ exports.handler=async event=>{
  if(event.httpMethod!=='POST'||!s.authorized(event))return s.response(401,{error:'unauthorized'});
  let c;try{c=s.command(s.parse(event))}catch{return s.response(400,{error:'invalid_update'})}
  if(!c)return s.response(200,{ok:true,ignored:true});
- const store=s.storage(event),day=new Date(c.date*1000).toISOString().slice(0,10),key=`updates/${day}/${c.updateId}`;
+ const store=await s.storage(event),day=new Date(c.date*1000).toISOString().slice(0,10),key=`updates/${day}/${c.updateId}`;
  if(!await s.claim(store,key))return s.response(200,{ok:true,duplicate:true});
  if(!await s.claim(store,`rate/${day}/${s.chatHash(c.chatId)}/${Math.floor(Date.now()/10000)}`))return s.response(200,{ok:true,throttled:true});
  let payload;
