@@ -4,17 +4,18 @@
 const {fetchEventForRouting}=require('./onexbet');
 const {verifiedTarget}=require('../lib/dynamic-event-routing');
 const {trackingUrl}=require('../lib/betsson-affiliate');
+const {trackingUrl:cloudbetTrackingUrl}=require('../lib/cloudbet-affiliate');
 const operators={
  betsson:{url:trackingUrl,hosts:['record.betsson.com']},
  onexbet:{url:'https://1xbet.com/en',hosts:['1xbet.com','www.1xbet.com']},
- cloudbet:{url:'https://www.cloudbet.com/en/sports',hosts:['cloudbet.com','www.cloudbet.com']}
+ cloudbet:{url:cloudbetTrackingUrl,hosts:['cldbt.cloud']}
 };
 exports.handler=async event=>{
  const headers={'Cache-Control':'no-store','Referrer-Policy':'no-referrer','X-Content-Type-Options':'nosniff'};
  if(event.httpMethod!=='GET')return {statusCode:405,headers:{...headers,Allow:'GET'},body:''};
  const q=event.queryStringParameters||{},operator=Object.hasOwn(operators,q.operator)?operators[q.operator]:null;
  if(!operator)return {statusCode:400,headers,body:'Unknown operator'};
- let destination=operator.url,kind=q.operator==='betsson'?'affiliate':'operator';
+ let destination=operator.url,kind=['betsson','cloudbet'].includes(q.operator)?'affiliate':'operator';
  if(q.operator==='onexbet'&&/^\d{1,18}$/.test(q.eventId||'')&&['live','prematch'].includes(q.kind)){
   try{
    const e=await fetchEventForRouting(q.eventId,q.kind);

@@ -117,8 +117,8 @@
   const sportEventId=String(entry.eventId);
   const routeQuery=new URLSearchParams({eventId:sportEventId,type:String(type),parameter,section,kind:state.kind});
   if(operator==='Cloudbet'){
-    link.textContent='Open Cloudbet sports ↗';
-    warning.textContent='Cloudbet quote is from matched event '+operatorEventId+'. This link opens Cloudbet sports, not a preselected match or bet. Find the same fixture and confirm the current price.';
+    link.textContent='Open Cloudbet · partner link ↗';link.rel='sponsored noopener noreferrer';
+    warning.textContent='Cloudbet quote is from matched event '+operatorEventId+'. This partner link opens Cloudbet’s promotional landing page. No match or bet is preselected. Navigate to Sports, find the same fixture and confirm the current price.';
     $('selectionDialog').classList.remove('hidden');$('closeSelection').focus();return;
   }
   fetch('/.netlify/functions/affiliate-route?'+routeQuery,{cache:'no-store'})
@@ -167,7 +167,7 @@
    const head=mk('tr');['Outcome','1xBet','Cloudbet','Higher snapshot'].forEach(t=>{const th=mk('th','',t);th.style.cssText='padding:8px;border-bottom:1px solid #456';head.append(th)});table.append(head);
    labels.forEach((label,i)=>{const row=mk('tr');const one=Number(oneOdds[i]?.oddsMarket);const cloud=Number(cloudOdds?.[fields[i]]);const a=Number.isFinite(one)&&one>1?one:null;const b=Number.isFinite(cloud)&&cloud>1?cloud:null;
     const winner=a!==null&&b!==null?(a>b?'1xBet':b>a?'Cloudbet':'Equal'):'Not comparable';
-    [label,a===null?'—':a.toFixed(2),b===null?'—':b.toFixed(2),winner].forEach((val,j)=>{const td=mk('td','',((j===1&&a!==null)||(j===2&&b!==null))?'':val);td.style.cssText='padding:10px 6px;border-bottom:1px solid #456';if((j===1&&a!==null)||(j===2&&b!==null)){const operator=j===1?'1xBet':'Cloudbet';const btn=mk('a','secondary-action',val+' ↗');btn.href=operatorHref(operator,eid,selectedKind);btn.target='_blank';btn.rel='noopener noreferrer';btn.style.cssText='min-width:74px;padding:8px';btn.title='Open '+operator+(operator==='Cloudbet'?' sports page':' (event when available)')+'; confirm '+label+' and current odds';btn.setAttribute('aria-label','Review '+operator+' '+label+' at '+val);btn.onclick=event=>{if(state.chosen?.eventId!==eid||state.kind!==selectedKind)event.preventDefault();};td.append(btn)}if(j===3&&winner!=='Not comparable')td.style.fontWeight='700';row.append(td)});table.append(row)});output.append(table)
+    [label,a===null?'—':a.toFixed(2),b===null?'—':b.toFixed(2),winner].forEach((val,j)=>{const td=mk('td','',((j===1&&a!==null)||(j===2&&b!==null))?'':val);td.style.cssText='padding:10px 6px;border-bottom:1px solid #456';if((j===1&&a!==null)||(j===2&&b!==null)){const operator=j===1?'1xBet':'Cloudbet';const btn=mk('a','secondary-action',val+' ↗');btn.href=operatorHref(operator,eid,selectedKind);btn.target='_blank';btn.rel=operator==='Cloudbet'?'sponsored noopener noreferrer':'noopener noreferrer';btn.style.cssText='min-width:74px;padding:8px';btn.title='Open '+operator+(operator==='Cloudbet'?' promotional page · partner link':' (event when available)')+'; confirm '+label+' and current odds';btn.setAttribute('aria-label','Review '+operator+' '+label+' at '+val);btn.onclick=event=>{if(state.chosen?.eventId!==eid||state.kind!==selectedKind)event.preventDefault();};td.append(btn)}if(j===3&&winner!=='Not comparable')td.style.fontWeight='700';row.append(td)});table.append(row)});output.append(table)
   };
   const renderCommon=quotes=>{
    if(!Array.isArray(quotes)||!window.BetCheapMarkets)return;
@@ -177,7 +177,7 @@
    const table=mk('table');table.style.cssText='width:100%;text-align:center';
    const head=mk('tr');['Market / period / line','1xBet','Cloudbet','Higher snapshot'].forEach(t=>head.append(mk('th','',t)));table.append(head);
    for(const r of rows){const tr=mk('tr');tr.append(mk('td','',window.BetCheapMarkets.label(r)));
-    for(const [operator,price] of [['1xBet',r.one],['Cloudbet',r.cloud]]){const td=mk('td'),a=mk('a','secondary-action',price.toFixed(2)+' ↗');a.href=operatorHref(operator,eid,selectedKind);a.target='_blank';a.rel='noopener noreferrer';a.title=window.BetCheapMarkets.label(r)+' at '+operator;a.onclick=ev=>{if(state.chosen?.eventId!==eid||state.kind!==selectedKind)ev.preventDefault()};td.append(a);tr.append(td)}
+    for(const [operator,price] of [['1xBet',r.one],['Cloudbet',r.cloud]]){const td=mk('td'),a=mk('a','secondary-action',price.toFixed(2)+' ↗');a.href=operatorHref(operator,eid,selectedKind);a.target='_blank';a.rel=operator==='Cloudbet'?'sponsored noopener noreferrer':'noopener noreferrer';a.title=window.BetCheapMarkets.label(r)+' at '+operator;a.onclick=ev=>{if(state.chosen?.eventId!==eid||state.kind!==selectedKind)ev.preventDefault()};td.append(a);tr.append(td)}
     tr.append(mk('td','',r.one>r.cloud?'1xBet':r.one<r.cloud?'Cloudbet':'Equal'));table.append(tr);
    }output.append(table);
   };
