@@ -34,3 +34,13 @@ test('events are deduplicated and never interpreted as customers or commission',
  assert.equal((await report(store,'2026-10-23')).counts.visit,0);
  await assert.rejects(report(store,'2026-02-31'),/invalid_date/);
 });
+test('X and Champion Z campaigns have separate signed sessions and report totals',async()=>{
+ const records=new Map();const store={setJSON:async(key,value)=>records.set(key,value),list:async function*({prefix}){yield {blobs:[...records.keys()].filter(key=>key.startsWith(prefix)).map(key=>({key}))}}};
+ const x=verify(issue(secret,now,'betcheap_x'),secret,now),champion=verify(issue(secret,now,'championz'),secret,now);
+ assert.equal(x.campaign,'betcheap_x');
+ await record(store,x,'visit');await record(store,x,'comparison');await record(store,champion,'visit');
+ assert.equal((await report(store,'2026-10-22','betcheap_x')).counts.comparison,1);
+ assert.equal((await report(store,'2026-10-22','championz')).counts.comparison,0);
+ assert.throws(()=>issue(secret,now,'../unknown'),/invalid_campaign/);
+ await assert.rejects(report(store,'2026-10-22','unknown'),/invalid_campaign/);
+});

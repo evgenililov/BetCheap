@@ -19,10 +19,11 @@ export default async request=>{
    if(!service.authorized({headers:Object.fromEntries(request.headers)}))return reply({error:'unauthorized'},401);
    if(typeof data.date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(data.date))return reply({error:'invalid_date'},400);
    if(!Number.isFinite(Date.parse(data.date))||new Date(data.date).toISOString().slice(0,10)!==data.date)return reply({error:'invalid_date'},400);
-   return reply(await referrals.report(store(),data.date));
+   if(data.campaign!==undefined&&!referrals.CAMPAIGNS.includes(data.campaign))return reply({error:'invalid_campaign'},400);
+   return reply(await referrals.report(store(),data.date,data.campaign));
   }
-  if(data?.action==='start'&&data.campaign===referrals.CAMPAIGN&&data.consent===true){
-   const token=referrals.issue(process.env.TELEGRAM_WEBHOOK_SECRET);
+  if(data?.action==='start'&&referrals.CAMPAIGNS.includes(data.campaign)&&data.consent===true){
+   const token=referrals.issue(process.env.TELEGRAM_WEBHOOK_SECRET,Date.now(),data.campaign);
    await referrals.record(store(),referrals.verify(token,process.env.TELEGRAM_WEBHOOK_SECRET),'visit');
    return reply({token});
   }
